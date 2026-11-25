@@ -1,0 +1,8 @@
+{
+  "name": "promptway-groq-local",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": { "start": "node --env-file=.env server.js" },
+  "engines": { "node": ">=22" },
+  "dependencies": { "express": "^5.1.0" }
+}

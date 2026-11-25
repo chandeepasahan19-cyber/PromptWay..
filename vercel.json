@@ -1,0 +1,10 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": "express",
+  "functions": {
+    "server.js": {
+      "includeFiles": "Multilingual_AI_Prompt_Generation_Mobile_Application11.html",
+      "maxDuration": 90
+    }
+  }
+}

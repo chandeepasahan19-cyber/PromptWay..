@@ -1,0 +1,4156 @@
+<!DOCTYPE html>
+<html lang="en-GB" data-theme="light" data-font-size="medium">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="artifact-type" content="tool">
+  <meta name="design-style" content="showroom">
+  <title>PromptWay — AI-Powered Prompt Builder &amp; Optimiser for Sinhala and Tamil Speakers</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Noto+Sans+Sinhala:wght@400;500;600;700&family=Noto+Sans+Tamil:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@1.43.0/dist/umd/lucide.min.js"></script>
+  <style>
+    :root {
+      color-scheme: light;
+
+      /* 1. Showroom light palette */
+      --background: #fbfbfd;
+      --surface-container-low: #f5f5f7;
+      --surface-container: #e8e8ed;
+      --surface-container-high: #dcdce1;
+      --surface-elevated: #ffffff;
+
+      /* Ink */
+      --on-surface: #1d1d1f;
+      --on-surface-variant: #6e6e73;
+
+      /* Rules */
+      --outline: #d2d2d7;
+      --outline-variant: #e5e5ea;
+
+      /* Accents */
+      --primary: #006bd6;
+      --primary-hover: #0055ad;
+      --on-primary: #ffffff;
+      --primary-container: #e8f1fd;
+      --on-primary-container: #0058b0;
+      --secondary: #bf4800;
+      --secondary-container: #fff0e6;
+      --on-secondary-container: #8f3500;
+      --tertiary: #1d1d1f;
+      --error: #d70015;
+      --error-container: #fdebec;
+      --on-error: #ffffff;
+
+      /* Semantic & data series */
+      --positive: #248a3d;
+      --positive-container: #e9f6ec;
+      --on-positive-container: #19662c;
+      --warning: #b25000;
+      --warning-container: #fff4e5;
+      --creative: #8944ab;
+      --creative-container: #f5ecfa;
+      --on-creative-container: #632882;
+
+      --data-1: #006bd6;
+      --data-2: #bf4800;
+      --data-3: #248a3d;
+      --data-4: #8944ab;
+      --data-context: #aeaeb2;
+
+      /* Focus */
+      --focus: #006bd6;
+      --focus-ring: 0 0 0 3px rgb(0 107 214 / 0.28);
+
+      /* Fonts (Sinhala & Tamil first-class support) */
+      --font-headline: 'Inter Tight', 'Noto Sans Sinhala', 'Noto Sans Tamil', sans-serif;
+      --font-body: 'Inter', 'Noto Sans Sinhala', 'Noto Sans Tamil', sans-serif;
+      --font-label: 'Inter', 'Noto Sans Sinhala', 'Noto Sans Tamil', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+
+      /* Shape */
+      --rounded: 9999px;
+      --rounded-md: 0.75rem;
+      --rounded-lg: 1.25rem;
+      --rounded-full: 9999px;
+
+      /* Style effects */
+      --headline-tracking: -0.03em;
+      --figure-tracking: -0.025em;
+      --tile-shadow-hover: 0 8px 28px rgb(0 0 0 / 0.08);
+      --seg-shadow: 0 1px 3px rgb(0 0 0 / 0.08);
+      --border-hairline: 1px solid var(--outline-variant);
+      --border-input: 1px solid var(--outline);
+
+      /* Type scale (Focused Tool) */
+      --display-size: clamp(1.625rem, 1.35rem + 1vw, 2.125rem);
+      --headline-size: clamp(1.2rem, 1.05rem + 0.45vw, 1.45rem);
+      --subhead-size: clamp(1.02rem, 0.96rem + 0.2vw, 1.15rem);
+      --body-size: clamp(0.9375rem, 0.9rem + 0.15vw, 1rem);
+      --label-size: 0.75rem;
+      --font-scale-mult: 1;
+
+      /* Spacing scale (4pt base) */
+      --space-xs: 0.25rem;
+      --space-sm: 0.5rem;
+      --space-md: 1rem;
+      --space-lg: 1.5rem;
+      --space-xl: 2.5rem;
+      --space-2xl: 4rem;
+
+      /* Motion */
+      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+      --dur-micro: 120ms;
+      --dur-short: 220ms;
+      --dur-long: 420ms;
+    }
+
+    html[data-theme="dark"] {
+      color-scheme: dark;
+      --background: #000000;
+      --surface-container-low: #1c1c1e;
+      --surface-container: #2c2c2e;
+      --surface-container-high: #3a3a3c;
+      --surface-elevated: #141416;
+
+      --on-surface: #f5f5f7;
+      --on-surface-variant: #a1a1a6;
+
+      --outline: #48484a;
+      --outline-variant: #38383a;
+
+      --primary: #2997ff;
+      --primary-hover: #52acff;
+      --on-primary: #000000;
+      --primary-container: #0c2b4d;
+      --on-primary-container: #8ac7ff;
+      --secondary: #ff8a3d;
+      --secondary-container: #381d0a;
+      --on-secondary-container: #ffb07a;
+      --tertiary: #f5f5f7;
+      --error: #ff453a;
+      --error-container: #3c1210;
+      --on-error: #000000;
+
+      --positive: #30d158;
+      --positive-container: #0f3319;
+      --on-positive-container: #74e590;
+      --warning: #ff9f0a;
+      --warning-container: #3a2400;
+      --creative: #bf5af2;
+      --creative-container: #311740;
+      --on-creative-container: #dfa3ff;
+
+      --data-1: #2997ff;
+      --data-2: #ff8a3d;
+      --data-3: #30d158;
+      --data-4: #bf5af2;
+      --data-context: #636366;
+
+      --focus: #2997ff;
+      --focus-ring: 0 0 0 3px rgb(41 151 255 / 0.35);
+      --tile-shadow-hover: 0 8px 28px rgb(0 0 0 / 0.45);
+      --seg-shadow: 0 1px 3px rgb(0 0 0 / 0.45);
+    }
+
+    html[data-font-size="small"] { --font-scale-mult: 0.92; }
+    html[data-font-size="medium"] { --font-scale-mult: 1; }
+    html[data-font-size="large"] { --font-scale-mult: 1.12; }
+
+    /* Base reset */
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body {
+      overflow-x: clip;
+      margin: 0;
+      padding: 0;
+      background-color: var(--background);
+      color: var(--on-surface);
+      font-family: var(--font-body);
+      font-size: calc(var(--body-size) * var(--font-scale-mult));
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+    header { position: static !important; }
+    button, input, select, textarea {
+      font-family: inherit;
+      font-size: inherit;
+      color: inherit;
+    }
+
+    :focus-visible {
+      outline: 2px solid var(--focus);
+      outline-offset: 2px;
+    }
+
+    /* Non-Latin script safeguard */
+    [lang="si"], [lang="ta"] {
+      letter-spacing: 0;
+      text-transform: none;
+      line-height: 1.65;
+    }
+
+    /* App Shell */
+    .app-container {
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: var(--space-md) var(--space-lg) var(--space-2xl);
+      display: grid;
+      gap: var(--space-lg);
+    }
+    .app-container * { min-width: 0; }
+
+    /* Header */
+    .app-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-md);
+      padding-bottom: var(--space-md);
+      border-bottom: var(--border-hairline);
+    }
+
+    .brand-lockup {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+    }
+    .brand-mark {
+      width: 44px;
+      height: 44px;
+      border-radius: var(--rounded-md);
+      background: var(--primary);
+      color: var(--on-primary);
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+    }
+    .brand-text h1 {
+      font-family: var(--font-headline);
+      font-weight: 700;
+      font-size: var(--headline-size);
+      letter-spacing: var(--headline-tracking);
+      line-height: 1.1;
+      margin: 0;
+      color: var(--on-surface);
+    }
+    .brand-tagline {
+      margin: var(--space-xs) 0 0;
+      font-size: 0.875rem;
+      color: var(--on-surface-variant);
+      line-height: 1.4;
+    }
+
+    .header-controls {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--space-sm);
+    }
+
+    .segmented-track {
+      display: inline-flex;
+      align-items: center;
+      background: var(--surface-container);
+      padding: var(--space-xs);
+      border-radius: var(--rounded);
+      gap: var(--space-xs);
+    }
+    .seg-btn {
+      border: 0;
+      background: transparent;
+      color: var(--on-surface);
+      padding: 0.45rem 0.9rem;
+      min-height: 36px;
+      border-radius: var(--rounded);
+      font-weight: 500;
+      font-size: 0.84rem;
+      cursor: pointer;
+      transition: background-color var(--dur-micro) var(--ease-in-out), color var(--dur-micro) var(--ease-in-out);
+      white-space: nowrap;
+    }
+    .seg-btn:hover {
+      background: var(--surface-container-high);
+    }
+    .seg-btn.is-active {
+      background: var(--background);
+      color: var(--primary);
+      box-shadow: var(--seg-shadow);
+    }
+
+    .icon-pill-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+      min-height: 44px;
+      padding: 0 var(--space-md);
+      border-radius: var(--rounded);
+      border: 0;
+      background: var(--surface-container-low);
+      color: var(--on-surface);
+      font-weight: 500;
+      font-size: 0.875rem;
+      cursor: pointer;
+      transition: background-color var(--dur-micro) var(--ease-out);
+    }
+    .icon-pill-btn:hover {
+      background: var(--surface-container);
+    }
+
+    /* Primary Workspace Navigation */
+    .app-nav {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-md);
+    }
+    .nav-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+    }
+    .nav-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-sm);
+      min-height: 44px;
+      padding: 0 var(--space-lg);
+      border-radius: var(--rounded);
+      border: 0;
+      background: var(--surface-container-low);
+      color: var(--on-surface);
+      font-weight: 500;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: background-color var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out);
+    }
+    .nav-btn:hover {
+      background: var(--surface-container);
+    }
+    .nav-btn.is-active {
+      background: var(--primary);
+      color: var(--on-primary);
+    }
+    .nav-count {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 22px;
+      height: 22px;
+      padding: 0 6px;
+      border-radius: var(--rounded);
+      font-size: 0.75rem;
+      font-weight: 600;
+      font-variant-numeric: tabular-nums;
+      background: var(--surface-container);
+      color: var(--on-surface);
+    }
+    .nav-btn.is-active .nav-count {
+      background: var(--on-primary);
+      color: var(--primary);
+    }
+
+    /* Engine Status Strip */
+    .engine-strip {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--space-sm);
+    }
+    .engine-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-sm);
+      min-height: 44px;
+      padding: 0.35rem 1rem;
+      border-radius: var(--rounded);
+      border: 0;
+      background: var(--surface-container-low);
+      color: var(--on-surface);
+      font-size: 0.8125rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color var(--dur-micro) var(--ease-out);
+    }
+    .engine-badge.is-gemini {
+      background: var(--primary-container);
+      color: var(--on-primary-container);
+    }
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: var(--rounded);
+      background: var(--positive);
+      flex-shrink: 0;
+    }
+    .engine-badge.is-gemini .status-dot {
+      background: var(--primary);
+    }
+
+    /* Views */
+    .view-panel { display: none; }
+    .view-panel.is-active { display: grid; gap: var(--space-lg); }
+
+    /* Builder 2-Column Workspace */
+    .builder-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.12fr);
+      gap: var(--space-lg);
+      align-items: start;
+    }
+    .builder-col {
+      display: grid;
+      gap: var(--space-lg);
+    }
+
+    /* Showroom Borderless Rounded Tile */
+    .tile {
+      background: var(--surface-container-low);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-lg);
+      border: 0;
+      display: grid;
+      gap: var(--space-md);
+    }
+    .tile-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-sm);
+    }
+    .tile-eyebrow {
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: var(--secondary);
+      margin: 0;
+    }
+    .tile-title {
+      font-family: var(--font-headline);
+      font-weight: 700;
+      font-size: var(--subhead-size);
+      letter-spacing: -0.015em;
+      margin: 0;
+      color: var(--on-surface);
+      line-height: 1.25;
+    }
+    .tile-subtitle {
+      margin: var(--space-xs) 0 0;
+      font-size: 0.875rem;
+      color: var(--on-surface-variant);
+      line-height: 1.5;
+    }
+
+    /* Form Controls */
+    .field-row-2 {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--space-md);
+      align-items: end;
+    }
+    .field-row-neg {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: var(--space-md);
+      align-items: end;
+    }
+    .field-row-3 {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--space-md);
+    }
+    .field-group {
+      display: grid;
+      gap: var(--space-xs);
+    }
+    .field-label {
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: var(--on-surface);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-xs);
+    }
+    .field-hint {
+      font-weight: 400;
+      color: var(--on-surface-variant);
+      font-size: 0.78rem;
+    }
+
+    .input-control, .select-control, .textarea-control {
+      width: 100%;
+      background: var(--background);
+      color: var(--on-surface);
+      border: var(--border-input);
+      border-radius: var(--rounded-md);
+      padding: 0.625rem 0.875rem;
+      min-height: 44px;
+      line-height: 1.5;
+      transition: border-color var(--dur-micro) var(--ease-out), box-shadow var(--dur-micro) var(--ease-out);
+    }
+    .select-control {
+      padding-right: 2.25rem;
+      cursor: pointer;
+    }
+    .textarea-control {
+      min-height: 132px;
+      resize: vertical;
+      line-height: 1.6;
+    }
+    .input-control:focus, .select-control:focus, .textarea-control:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: var(--focus-ring);
+    }
+
+    /* Platform & Chip Selectors */
+    .chip-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+    }
+    .choice-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      min-height: 44px;
+      padding: 0.4rem 0.95rem;
+      border-radius: var(--rounded);
+      border: var(--border-input);
+      background: var(--background);
+      color: var(--on-surface);
+      font-size: 0.84rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background-color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out);
+    }
+    .choice-chip:hover {
+      background: var(--surface-container);
+    }
+    .choice-chip.is-active {
+      background: var(--primary-container);
+      color: var(--on-primary-container);
+      border-color: var(--primary);
+      font-weight: 600;
+    }
+
+    .sample-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      min-height: 40px;
+      padding: 0.35rem 0.85rem;
+      border-radius: var(--rounded);
+      border: 0;
+      background: var(--background);
+      color: var(--on-surface);
+      font-size: 0.8125rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background-color var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out);
+    }
+    .sample-chip:hover {
+      background: var(--primary-container);
+      color: var(--on-primary-container);
+    }
+    .lang-tag {
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 0.12rem 0.48rem;
+      border-radius: var(--rounded);
+      background: var(--surface-container);
+      color: var(--on-surface);
+    }
+
+    /* Primary & Secondary Action Buttons */
+    .action-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-sm);
+    }
+    .action-group {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--space-sm);
+    }
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.45rem;
+      min-height: 44px;
+      padding: 0 var(--space-lg);
+      border-radius: var(--rounded);
+      border: 0;
+      background: var(--primary);
+      color: var(--on-primary);
+      font-weight: 600;
+      font-size: 0.92rem;
+      cursor: pointer;
+      transition: background-color var(--dur-micro) var(--ease-out), transform var(--dur-micro) var(--ease-out);
+    }
+    .btn-primary:hover { background: var(--primary-hover); }
+    .btn-primary:active { transform: scale(0.98); }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      min-height: 44px;
+      padding: 0 var(--space-md);
+      border-radius: var(--rounded);
+      border: 0;
+      background: var(--surface-container);
+      color: var(--on-surface);
+      font-weight: 500;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: background-color var(--dur-micro) var(--ease-out);
+    }
+    .btn-secondary:hover { background: var(--surface-container-high); }
+    .btn-secondary.is-recording {
+      background: var(--error-container);
+      color: var(--error);
+    }
+
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      min-height: 44px;
+      padding: 0 0.85rem;
+      border-radius: var(--rounded);
+      border: 0;
+      background: transparent;
+      color: var(--primary);
+      font-weight: 500;
+      font-size: 0.84rem;
+      cursor: pointer;
+      transition: background-color var(--dur-micro) var(--ease-out);
+    }
+    .btn-ghost:hover { background: var(--primary-container); }
+
+    .btn-danger {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      min-height: 44px;
+      padding: 0 var(--space-md);
+      border-radius: var(--rounded);
+      border: 0;
+      background: var(--error-container);
+      color: var(--error);
+      font-weight: 600;
+      font-size: 0.84rem;
+      cursor: pointer;
+    }
+
+    /* Inline feedback banner */
+    .inline-notice {
+      padding: var(--space-sm) var(--space-md);
+      border-radius: var(--rounded-md);
+      background: var(--primary-container);
+      color: var(--on-primary-container);
+      font-size: 0.84rem;
+      line-height: 1.45;
+      display: none;
+    }
+    .inline-notice.is-visible { display: flex; align-items: center; justify-content: space-between; gap: var(--space-sm); }
+    .inline-notice.is-warn { background: var(--warning-container); color: var(--warning); }
+    .inline-notice.is-positive { background: var(--positive-container); color: var(--on-positive-container); }
+
+    /* Clarity Score Bar */
+    .clarity-box {
+      background: var(--background);
+      border-radius: var(--rounded-md);
+      padding: var(--space-md);
+      display: grid;
+      gap: var(--space-sm);
+    }
+    .clarity-box-center {
+      text-align: center;
+    }
+    .clarity-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-sm);
+    }
+    .clarity-label-text {
+      font-size: 0.84rem;
+      font-weight: 600;
+    }
+    .clarity-meta-row {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+    }
+    .clarity-status-text {
+      font-size: 0.8rem;
+      color: var(--on-surface-variant);
+    }
+    .clarity-score-num {
+      font-family: var(--font-headline);
+      font-weight: 700;
+      font-size: 1.35rem;
+      font-variant-numeric: tabular-nums;
+      letter-spacing: var(--figure-tracking);
+      color: var(--on-surface);
+    }
+    .clarity-track {
+      height: 10px;
+      width: 100%;
+      border-radius: var(--rounded);
+      background: var(--surface-container);
+      overflow: hidden;
+    }
+    .clarity-fill {
+      height: 100%;
+      border-radius: var(--rounded);
+      background: var(--primary);
+      transition: width var(--dur-short) var(--ease-out), background-color var(--dur-short) var(--ease-out);
+    }
+    .clarity-fill.is-high { background: var(--positive); }
+    .clarity-fill.is-mid { background: var(--primary); }
+    .clarity-fill.is-low { background: var(--warning); }
+
+    .tip-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+    .tip-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      padding: 0.25rem 0.7rem;
+      border-radius: var(--rounded);
+      font-size: 0.76rem;
+      font-weight: 500;
+      background: var(--warning-container);
+      color: var(--warning);
+    }
+    .tip-badge.is-done {
+      background: var(--positive-container);
+      color: var(--on-positive-container);
+    }
+
+    /* 5-Block Universal Framework Bar */
+    .framework-strip {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: var(--space-xs);
+    }
+    .fw-pill {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2px;
+      min-height: 48px;
+      padding: 0.45rem 0.25rem;
+      border-radius: var(--rounded-md);
+      border: 0;
+      background: var(--background);
+      color: var(--on-surface-variant);
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out), box-shadow var(--dur-micro) var(--ease-out);
+    }
+    .fw-pill.is-covered {
+      background: var(--positive-container);
+      color: var(--on-positive-container);
+    }
+    .fw-pill.is-selected {
+      box-shadow: 0 0 0 2px var(--primary);
+    }
+    .fw-preview {
+      background: var(--background);
+      border-radius: var(--rounded-md);
+      padding: var(--space-sm) var(--space-md);
+      font-size: 0.84rem;
+      color: var(--on-surface-variant);
+      line-height: 1.5;
+    }
+
+    /* Prompt Variation Cards */
+    .variation-stack {
+      display: grid;
+      gap: var(--space-md);
+    }
+    .prompt-card {
+      background: var(--background);
+      border-radius: var(--rounded-md);
+      padding: var(--space-md);
+      display: grid;
+      gap: var(--space-sm);
+      transition: box-shadow var(--dur-short) var(--ease-out);
+    }
+    .prompt-card:hover {
+      box-shadow: var(--tile-shadow-hover);
+    }
+    .prompt-card-top {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-sm);
+    }
+    .var-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.25rem 0.75rem;
+      border-radius: var(--rounded);
+      font-size: 0.76rem;
+      font-weight: 600;
+    }
+    .var-badge.basic { background: var(--surface-container); color: var(--on-surface); }
+    .var-badge.detailed { background: var(--primary-container); color: var(--on-primary-container); }
+    .var-badge.creative { background: var(--creative-container); color: var(--on-creative-container); }
+
+    .prompt-meta {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--on-surface-variant);
+      font-variant-numeric: tabular-nums;
+    }
+    .prompt-output {
+      margin: 0;
+      white-space: pre-wrap;
+      word-break: break-word;
+      font-family: var(--font-body);
+      font-size: 0.92rem;
+      line-height: 1.6;
+      color: var(--on-surface);
+      background: var(--surface-container-low);
+      padding: var(--space-md);
+      border-radius: var(--rounded-md);
+    }
+    .prompt-output-compact {
+      max-height: 170px;
+      overflow: auto;
+    }
+    .prompt-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--space-xs);
+    }
+    .mini-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      min-height: 38px;
+      padding: 0 0.8rem;
+      border-radius: var(--rounded);
+      border: 0;
+      background: var(--surface-container-low);
+      color: var(--on-surface);
+      font-size: 0.8125rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background-color var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out);
+    }
+    .mini-btn:hover { background: var(--surface-container); }
+    .mini-btn.is-active {
+      background: var(--primary-container);
+      color: var(--on-primary-container);
+      font-weight: 600;
+    }
+    .mini-btn.is-copied {
+      background: var(--positive-container);
+      color: var(--on-positive-container);
+    }
+    .mini-btn.is-danger {
+      color: var(--error);
+    }
+
+    /* Bilingual Verification Side-by-Side */
+    .bilingual-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--space-md);
+    }
+    .lang-verify-card {
+      background: var(--background);
+      border-radius: var(--rounded-md);
+      padding: var(--space-md);
+      display: grid;
+      gap: var(--space-xs);
+      align-content: start;
+    }
+    .lang-verify-title {
+      font-size: 0.84rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin: 0;
+    }
+    .lang-verify-body {
+      margin: 0;
+      font-size: 0.92rem;
+      line-height: 1.6;
+      color: var(--on-surface);
+    }
+    .why-works-box {
+      background: var(--background);
+      border-radius: var(--rounded-md);
+      padding: var(--space-md);
+      font-size: 0.875rem;
+      color: var(--on-surface-variant);
+      line-height: 1.55;
+    }
+
+    /* Negative Prompt Box (Conditional) */
+    .negative-box {
+      display: none;
+    }
+    .negative-box.is-visible {
+      display: grid;
+    }
+
+    /* Adaptive Card Grid for Templates, Saved, History */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
+      gap: var(--space-lg);
+    }
+    .catalog-card {
+      background: var(--surface-container-low);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-lg);
+      display: grid;
+      gap: var(--space-sm);
+      align-content: space-between;
+      transition: box-shadow var(--dur-short) var(--ease-out);
+    }
+    .catalog-card:hover {
+      box-shadow: var(--tile-shadow-hover);
+    }
+    .catalog-card-body {
+      display: grid;
+      gap: var(--space-sm);
+    }
+    .card-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-xs);
+      align-items: center;
+    }
+    .pill-tag {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.22rem 0.7rem;
+      border-radius: var(--rounded);
+      background: var(--primary-container);
+      color: var(--on-primary-container);
+      font-size: 0.75rem;
+      font-weight: 600;
+      width: fit-content;
+    }
+    .pill-tag.neutral {
+      background: var(--surface-container);
+      color: var(--on-surface);
+    }
+
+    .compact-select {
+      min-height: 38px;
+      width: auto;
+      padding: 0.25rem 2rem 0.25rem 0.75rem;
+      font-size: 0.8rem;
+    }
+
+    /* Empty States */
+    .empty-state {
+      background: var(--surface-container-low);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-2xl) var(--space-lg);
+      text-align: center;
+      display: grid;
+      justify-items: center;
+      gap: var(--space-sm);
+    }
+    .empty-state p {
+      margin: 0;
+      max-width: 48ch;
+      color: var(--on-surface-variant);
+    }
+
+    /* Settings, Research Comparison & Roadmap */
+    .settings-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr));
+      gap: var(--space-lg);
+    }
+    .roadmap-phases-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr));
+      gap: var(--space-md);
+    }
+    .comparison-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--space-md);
+    }
+    .metric-list {
+      display: grid;
+      gap: var(--space-sm);
+      margin-top: var(--space-sm);
+    }
+    .metric-row {
+      display: grid;
+      gap: 4px;
+      padding-bottom: var(--space-xs);
+      border-bottom: var(--border-hairline);
+    }
+    .metric-row:last-child { border-bottom: 0; }
+    .metric-row-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: var(--space-sm);
+      font-size: 0.82rem;
+    }
+    .metric-strong {
+      color: var(--positive);
+      font-weight: 700;
+    }
+    .metric-bars {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--space-sm);
+    }
+    .metric-bar-track {
+      height: 6px;
+      border-radius: var(--rounded);
+      background: var(--surface-container);
+      overflow: hidden;
+    }
+    .metric-bar-a {
+      height: 100%;
+      border-radius: var(--rounded);
+      background: var(--data-context);
+    }
+    .metric-bar-b {
+      height: 100%;
+      border-radius: var(--rounded);
+      background: var(--data-1);
+    }
+
+    .checklist-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr));
+      gap: var(--space-sm);
+    }
+    .check-item {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-sm);
+      padding: var(--space-sm) var(--space-md);
+      border-radius: var(--rounded-md);
+      background: var(--background);
+      cursor: pointer;
+    }
+    .check-item input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      margin-top: 2px;
+      accent-color: var(--primary);
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+    .check-text {
+      font-size: 0.84rem;
+      line-height: 1.45;
+    }
+    .check-text.is-done {
+      text-decoration: line-through;
+      color: var(--on-surface-variant);
+    }
+
+    .drafts-drawer {
+      background: var(--background);
+      border-radius: var(--rounded-md);
+      padding: var(--space-md);
+      display: none;
+      gap: var(--space-sm);
+    }
+    .drafts-drawer.is-open { display: grid; }
+    .draft-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-sm);
+      padding: var(--space-xs) 0;
+      border-bottom: var(--border-hairline);
+    }
+    .draft-row:last-child { border-bottom: 0; }
+    .draft-title {
+      font-size: 0.85rem;
+      font-weight: 500;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .filter-field-wide { min-width: 220px; }
+    .flaw-note {
+      margin: 0;
+      font-size: 0.84rem;
+      color: var(--error);
+    }
+    .card-idea-line {
+      margin: 0;
+      font-size: 0.875rem;
+      color: var(--on-surface-variant);
+    }
+
+    .app-footer {
+      padding-top: var(--space-lg);
+      border-top: var(--border-hairline);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: var(--space-sm);
+      font-size: 0.8125rem;
+      color: var(--on-surface-variant);
+    }
+
+    /* Language accuracy recommendation */
+    html.language-tip-open, html.language-tip-open body { overflow: hidden; }
+    .language-tip {
+      width: min(34rem, calc(100% - 2rem));
+      max-height: calc(100vh - 2rem);
+      max-height: calc(100dvh - 2rem);
+      margin: auto;
+      padding: clamp(1.25rem, 4vw, 2rem);
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      border: var(--border-hairline);
+      border-radius: var(--rounded-lg);
+      background: var(--surface-elevated);
+      color: var(--on-surface);
+      box-shadow: 0 20px 64px rgb(0 0 0 / 0.2);
+    }
+    .language-tip[open] { animation: language-tip-enter var(--dur-short) var(--ease-out); }
+    .language-tip::backdrop {
+      background: rgb(0 0 0 / 0.38);
+      animation: language-tip-overlay var(--dur-short) ease-out;
+    }
+    .language-tip-header { display: flex; align-items: center; justify-content: space-between; gap: var(--space-md); }
+    .language-tip-icon {
+      display: grid;
+      place-items: center;
+      width: 48px;
+      height: 48px;
+      border-radius: var(--rounded-md);
+      background: var(--primary-container);
+      color: var(--on-primary-container);
+    }
+    .language-tip-close {
+      display: grid;
+      place-items: center;
+      width: 44px;
+      height: 44px;
+      padding: 0;
+      border: 0;
+      border-radius: var(--rounded-full);
+      background: transparent;
+      color: var(--on-surface-variant);
+      cursor: pointer;
+    }
+    .language-tip-close:hover { background: var(--surface-container-low); }
+    .language-tip h2 {
+      margin: var(--space-md) 0;
+      font-family: var(--font-headline);
+      font-size: var(--headline-size);
+      letter-spacing: var(--headline-tracking);
+      line-height: 1.25;
+    }
+    .language-tip-copy { display: grid; gap: var(--space-md); }
+    .language-tip-copy p { margin: 0; overflow-wrap: anywhere; }
+    .language-tip-copy [lang="si"] { font-family: 'Noto Sans Sinhala', sans-serif; }
+    .language-tip-copy [lang="ta"] { font-family: 'Noto Sans Tamil', sans-serif; }
+    .language-tip-note {
+      padding: var(--space-md);
+      border-radius: var(--rounded-md);
+      background: var(--surface-container-low);
+      color: var(--on-surface-variant);
+      font-size: 0.875rem;
+    }
+    .language-tip-preference {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      min-height: 44px;
+      margin: var(--space-md) 0 var(--space-sm);
+      cursor: pointer;
+      font-size: 0.875rem;
+    }
+    .language-tip-preference input { width: 18px; height: 18px; margin: 0; flex-shrink: 0; accent-color: var(--primary); }
+    .language-tip .btn-primary { width: 100%; padding: 0.75rem var(--space-md); }
+    @keyframes language-tip-enter {
+      from { opacity: 0; transform: translateY(10px) scale(0.98); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    @keyframes language-tip-overlay { from { opacity: 0; } to { opacity: 1; } }
+
+    /* Responsive Breakpoints */
+    @media (max-width: 960px) {
+      .builder-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 640px) {
+      .app-container { padding: var(--space-sm) var(--space-md) var(--space-xl); }
+      .field-row-2, .field-row-neg, .field-row-3 { grid-template-columns: 1fr; }
+      .bilingual-grid { grid-template-columns: 1fr; }
+      .comparison-grid { grid-template-columns: 1fr; }
+      .framework-strip { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .nav-btn { flex: 1 1 auto; justify-content: center; padding: 0 var(--space-md); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-container">
+    <!-- Top Header -->
+    <header class="app-header">
+      <div class="brand-lockup">
+        <div class="brand-mark" aria-hidden="true">
+          <i data-lucide="sparkles"></i>
+        </div>
+        <div class="brand-text">
+          <h1>PromptWay</h1>
+          <p class="brand-tagline" id="ui-tagline">Your Ideas. Better AI Prompts — Sinhala, Tamil, Singlish &amp; Tanglish to Optimised English.</p>
+        </div>
+      </div>
+
+      <div class="header-controls">
+        <div class="segmented-track" role="group" aria-label="Interface language">
+          <button type="button" class="seg-btn is-active" id="lang-btn-en" onclick="setInterfaceLanguage('en')">English</button>
+          <button type="button" class="seg-btn" id="lang-btn-si" onclick="setInterfaceLanguage('si')">සිංහල</button>
+          <button type="button" class="seg-btn" id="lang-btn-ta" onclick="setInterfaceLanguage('ta')">தமிழ்</button>
+        </div>
+
+        <button type="button" class="icon-pill-btn" id="theme-toggle-btn" onclick="toggleTheme()" aria-label="Toggle colour theme">
+          <i data-lucide="sun" id="theme-icon" aria-hidden="true"></i>
+          <span id="theme-label">Light</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Primary Navigation & Engine Indicator -->
+    <nav class="app-nav" aria-label="Workspace sections">
+      <div class="nav-pills">
+        <button type="button" class="nav-btn is-active" id="nav-builder" onclick="switchView('builder')">
+          <i data-lucide="sparkles" aria-hidden="true"></i>
+          <span data-i18n="nav_builder">Prompt Builder</span>
+        </button>
+        <button type="button" class="nav-btn" id="nav-templates" onclick="switchView('templates')">
+          <i data-lucide="layout-grid" aria-hidden="true"></i>
+          <span data-i18n="nav_templates">Templates</span>
+          <span class="nav-count" id="count-templates">10</span>
+        </button>
+        <button type="button" class="nav-btn" id="nav-saved" onclick="switchView('saved')">
+          <i data-lucide="bookmark" aria-hidden="true"></i>
+          <span data-i18n="nav_saved">Saved</span>
+          <span class="nav-count" id="count-saved">0</span>
+        </button>
+        <button type="button" class="nav-btn" id="nav-history" onclick="switchView('history')">
+          <i data-lucide="history" aria-hidden="true"></i>
+          <span data-i18n="nav_history">History</span>
+          <span class="nav-count" id="count-history">0</span>
+        </button>
+        <button type="button" class="nav-btn" id="nav-settings" onclick="switchView('settings')">
+          <i data-lucide="sliders-horizontal" aria-hidden="true"></i>
+          <span data-i18n="nav_settings">Settings &amp; Roadmap</span>
+        </button>
+      </div>
+
+      <div class="engine-strip">
+        <button type="button" class="engine-badge" id="engine-toggle-btn" onclick="toggleEngineMode()" title="Click to toggle between Offline Local Engine and Groq AI">
+          <span class="status-dot" aria-hidden="true"></span>
+          <span id="engine-badge-text">Engine: Local Engine (Offline)</span>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Global Inline Notice -->
+    <div class="inline-notice" id="global-notice" role="status" aria-live="polite">
+      <span id="global-notice-text"></span>
+      <button type="button" class="mini-btn" onclick="hideNotice()">Dismiss</button>
+    </div>
+
+    <!-- VIEW 1: PROMPT BUILDER WORKSPACE -->
+    <section class="view-panel is-active" id="view-builder" aria-label="Prompt Builder Workspace">
+      <div class="builder-grid">
+        <!-- LEFT COLUMN: Step 1 & Step 2 -->
+        <div class="builder-col">
+          <!-- Step 1 Tile -->
+          <div class="tile">
+            <div class="tile-header">
+              <div>
+                <p class="tile-eyebrow" data-i18n="step_1_eyebrow">Step 1 · Express your idea</p>
+                <h2 class="tile-title" data-i18n="builder_input_title">Multilingual Prompt Workspace</h2>
+              </div>
+              <span class="pill-tag neutral" id="detected-lang-pill">Detected: Sinhala (සිංහල)</span>
+            </div>
+
+            <div class="field-row-2">
+              <div class="field-group">
+                <label class="field-label" for="input-lang-select" data-i18n="label_input_lang">Input language</label>
+                <select class="select-control" id="input-lang-select" onchange="onInputConfigChange()">
+                  <option value="auto">Auto-detect</option>
+                  <option value="sinhala">Sinhala (සිංහල)</option>
+                  <option value="tamil">Tamil (தமிழ்)</option>
+                  <option value="singlish">Singlish (Sinhala in English)</option>
+                  <option value="tanglish">Tanglish (Tamil in English)</option>
+                  <option value="english">English</option>
+                </select>
+              </div>
+
+              <div class="field-group">
+                <label class="field-label" for="category-select" data-i18n="label_category">Prompt category</label>
+                <select class="select-control" id="category-select" onchange="onCategoryChange()">
+                  <option value="social">Social Media Post</option>
+                  <option value="video">Video Generation</option>
+                  <option value="research">Research</option>
+                  <option value="academic">Academic Assignment</option>
+                  <option value="daily">Daily Life</option>
+                  <option value="general">General / Custom Idea</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Target AI Platform Selector -->
+            <div class="field-group">
+              <span class="field-label" data-i18n="label_target_ai">Target AI platform</span>
+              <div class="chip-grid" id="platform-chips" role="group" aria-label="Target AI platform">
+                <button type="button" class="choice-chip is-active" data-platform="ChatGPT" onclick="selectPlatform('ChatGPT')">ChatGPT</button>
+                <button type="button" class="choice-chip" data-platform="Gemini" onclick="selectPlatform('Gemini')">Gemini</button>
+                <button type="button" class="choice-chip" data-platform="Claude" onclick="selectPlatform('Claude')">Claude</button>
+                <button type="button" class="choice-chip" data-platform="Midjourney" onclick="selectPlatform('Midjourney')">Midjourney</button>
+                <button type="button" class="choice-chip" data-platform="Video AI" onclick="selectPlatform('Video AI')">Video AI</button>
+                <button type="button" class="choice-chip" data-platform="Coding AI" onclick="selectPlatform('Coding AI')">Coding AI</button>
+              </div>
+            </div>
+
+            <!-- Quick Sample Ideas -->
+            <div class="field-group">
+              <span class="field-label" data-i18n="label_samples">Quick sample ideas</span>
+              <div class="chip-grid" id="sample-ideas-row">
+                <button type="button" class="sample-chip" onclick="loadSample(0)"><span class="lang-tag" lang="si">සිංහල</span> YouTube script</button>
+                <button type="button" class="sample-chip" onclick="loadSample(1)"><span class="lang-tag">Singlish</span> Cake shop IG</button>
+                <button type="button" class="sample-chip" onclick="loadSample(2)"><span class="lang-tag" lang="ta">தமிழ்</span> A/L Biology</button>
+                <button type="button" class="sample-chip" onclick="loadSample(3)"><span class="lang-tag">Tanglish</span> Tea brand logo</button>
+                <button type="button" class="sample-chip" onclick="loadSample(4)"><span class="lang-tag">Video AI</span> Ella train drone</button>
+                <button type="button" class="sample-chip" onclick="loadSample(5)"><span class="lang-tag">Coding</span> FastAPI validator</button>
+              </div>
+            </div>
+
+            <!-- Main Input Textarea -->
+            <div class="field-group">
+              <label class="field-label" for="idea-textarea">
+                <span data-i18n="label_your_idea">Describe your idea in Sinhala, Tamil, Singlish, Tanglish, or English</span>
+                <span class="field-hint" id="idea-char-count">0 chars</span>
+              </label>
+              <textarea
+                class="textarea-control"
+                id="idea-textarea"
+                placeholder="Type or speak your idea here — e.g., මට YouTube වීඩියෝ එකකට script එකක් හදාගන්න ඕන..."
+                oninput="onIdeaTyping()"
+              ></textarea>
+            </div>
+
+            <!-- Input Toolbar & Primary CTA -->
+            <div class="action-bar">
+              <div class="action-group">
+                <button type="button" class="btn-secondary" id="voice-btn" onclick="toggleVoiceInput()">
+                  <i data-lucide="mic" aria-hidden="true"></i>
+                  <span id="voice-btn-label" data-i18n="btn_voice">Voice input</span>
+                </button>
+                <button type="button" class="btn-secondary" onclick="saveDraft()">
+                  <i data-lucide="file-plus-2" aria-hidden="true"></i>
+                  <span data-i18n="btn_save_draft">Save draft</span>
+                </button>
+                <button type="button" class="btn-ghost" id="toggle-drafts-btn" onclick="toggleDraftsDrawer()">
+                  <span data-i18n="btn_drafts">Drafts</span> (<span id="count-drafts">0</span>)
+                </button>
+                <button type="button" class="btn-ghost" onclick="clearIdeaInput()" data-i18n="btn_clear">Clear</button>
+              </div>
+
+              <button type="button" class="btn-primary" onclick="generatePrompts(true)">
+                <i data-lucide="wand-sparkles" aria-hidden="true"></i>
+                <span data-i18n="btn_generate">Generate Prompts</span>
+              </button>
+            </div>
+
+            <div class="inline-notice" id="voice-notice" role="status">
+              <span id="voice-notice-text"></span>
+            </div>
+
+            <!-- Offline Drafts Drawer -->
+            <div class="drafts-drawer" id="drafts-drawer">
+              <div class="tile-header">
+                <strong style="font-size: 0.875rem;" data-i18n="drafts_title">Saved Offline Drafts</strong>
+                <button type="button" class="mini-btn" onclick="toggleDraftsDrawer()">Close</button>
+              </div>
+              <div id="drafts-list"></div>
+            </div>
+          </div>
+
+          <!-- Step 2: Smart Clarifying Questions + Dynamic Clarity Score Bar -->
+          <div class="tile">
+            <div class="tile-header">
+              <div>
+                <p class="tile-eyebrow" data-i18n="step_2_eyebrow">Step 2 · Smart clarification</p>
+                <h2 class="tile-title" data-i18n="smart_questions_title">Category Clarifying Questions</h2>
+              </div>
+              <span class="pill-tag" id="active-cat-badge">Social Media Post</span>
+            </div>
+
+            <!-- Dynamic Prompt Clarity Score Meter -->
+            <div class="clarity-box">
+              <div class="clarity-head">
+                <span class="clarity-label-text" data-i18n="clarity_label">Prompt Clarity Score</span>
+                <div class="clarity-meta-row">
+                  <span class="clarity-status-text" id="clarity-status-label">Good structure</span>
+                  <span class="clarity-score-num" id="clarity-score-value">0%</span>
+                </div>
+              </div>
+              <div class="clarity-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="clarity-progressbar">
+                <div class="clarity-fill" id="clarity-fill" style="width: 0%;"></div>
+              </div>
+              <div class="tip-badges" id="clarity-tips"></div>
+            </div>
+
+            <!-- Dynamic Category Questions Container -->
+            <div id="smart-questions-container" class="field-row-2"></div>
+          </div>
+        </div>
+
+        <!-- RIGHT COLUMN: Step 3 & Step 4 -->
+        <div class="builder-col">
+          <!-- Step 3: Optimised Prompt Results Panel -->
+          <div class="tile">
+            <div class="tile-header">
+              <div>
+                <p class="tile-eyebrow" data-i18n="step_3_eyebrow">Step 3 · Optimised output</p>
+                <h2 class="tile-title" data-i18n="results_title">Optimised English Prompts</h2>
+                <p class="tile-subtitle" id="results-subtitle">Tailored for ChatGPT using the 5-Block Universal Framework.</p>
+              </div>
+              <span class="pill-tag" id="results-platform-badge">ChatGPT</span>
+            </div>
+
+            <!-- 5-Block Universal Framework Coverage -->
+            <div class="field-group">
+              <span class="field-label">
+                <span data-i18n="framework_label">5-Block Universal Framework Coverage</span>
+                <span class="field-hint" id="framework-coverage-count">5 / 5 blocks active</span>
+              </span>
+              <div class="framework-strip" id="framework-strip" role="group" aria-label="Universal prompt framework blocks">
+                <button type="button" class="fw-pill is-covered is-selected" data-block="role" onclick="inspectFrameworkBlock('role')">
+                  <span>1. ROLE</span>
+                  <span id="fw-status-role">Active</span>
+                </button>
+                <button type="button" class="fw-pill is-covered" data-block="context" onclick="inspectFrameworkBlock('context')">
+                  <span>2. CONTEXT</span>
+                  <span id="fw-status-context">Active</span>
+                </button>
+                <button type="button" class="fw-pill is-covered" data-block="task" onclick="inspectFrameworkBlock('task')">
+                  <span>3. TASK</span>
+                  <span id="fw-status-task">Active</span>
+                </button>
+                <button type="button" class="fw-pill is-covered" data-block="constraints" onclick="inspectFrameworkBlock('constraints')">
+                  <span>4. RULES</span>
+                  <span id="fw-status-constraints">Active</span>
+                </button>
+                <button type="button" class="fw-pill is-covered" data-block="format" onclick="inspectFrameworkBlock('format')">
+                  <span>5. FORMAT</span>
+                  <span id="fw-status-format">Active</span>
+                </button>
+              </div>
+              <div class="fw-preview" id="framework-preview-box"></div>
+            </div>
+
+            <!-- Refine & Remix Toolbar -->
+            <div class="field-group">
+              <span class="field-label" data-i18n="refine_label">Refine or remix output</span>
+              <div class="chip-grid" id="refine-buttons">
+                <button type="button" class="mini-btn is-active" data-refine="none" onclick="applyRefinement('none')">Standard</button>
+                <button type="button" class="mini-btn" data-refine="shorter" onclick="applyRefinement('shorter')">Shorter</button>
+                <button type="button" class="mini-btn" data-refine="formal" onclick="applyRefinement('formal')">Formal</button>
+                <button type="button" class="mini-btn" data-refine="visual" onclick="applyRefinement('visual')">Visual Details</button>
+                <button type="button" class="mini-btn" data-refine="creative" onclick="applyRefinement('creative')">Creative+</button>
+                <button type="button" class="mini-btn" data-refine="simplify" onclick="applyRefinement('simplify')">Simplify English</button>
+                <button type="button" class="mini-btn" data-refine="constraints" onclick="applyRefinement('constraints')">Add Constraints</button>
+                <button type="button" class="mini-btn" data-refine="remix" onclick="applyRefinement('remix')">Remix Angle</button>
+              </div>
+            </div>
+
+            <!-- Variation View Filter -->
+            <div class="action-bar">
+              <div class="segmented-track" role="group" aria-label="Prompt variation filter">
+                <button type="button" class="seg-btn is-active" id="var-filter-all" onclick="setVariationFilter('all')">All 3</button>
+                <button type="button" class="seg-btn" id="var-filter-basic" onclick="setVariationFilter('basic')">Basic</button>
+                <button type="button" class="seg-btn" id="var-filter-detailed" onclick="setVariationFilter('detailed')">Detailed</button>
+                <button type="button" class="seg-btn" id="var-filter-creative" onclick="setVariationFilter('creative')">Creative</button>
+              </div>
+              <span class="field-hint" id="open-ai-hint">Copy and paste into ChatGPT</span>
+            </div>
+
+            <!-- Variation Cards Container -->
+            <div class="variation-stack" id="prompt-variations-container"></div>
+          </div>
+
+          <!-- Conditional Negative Prompt / Avoid List Box (Midjourney & Video AI only) -->
+          <div class="tile negative-box" id="negative-prompt-tile">
+            <div class="tile-header">
+              <div>
+                <p class="tile-eyebrow">Visual Guardrails</p>
+                <h3 class="tile-title" data-i18n="negative_title">Negative Prompt / Avoid List</h3>
+                <p class="tile-subtitle">Automatically enabled for Midjourney and Video AI to prevent visual artefacts.</p>
+              </div>
+              <button type="button" class="mini-btn" id="copy-neg-btn" onclick="copyNegativePrompt()">
+                <i data-lucide="copy" aria-hidden="true"></i>
+                <span>Copy avoid list</span>
+              </button>
+            </div>
+
+            <div class="chip-grid" id="negative-chips"></div>
+
+            <div class="field-row-neg">
+              <div class="field-group">
+                <label class="field-label" for="custom-negative-input">Add custom element to avoid</label>
+                <input type="text" class="input-control" id="custom-negative-input" placeholder="e.g., neon colours, extra fingers, text overlay">
+              </div>
+              <button type="button" class="btn-secondary" onclick="addCustomNegative()">Add</button>
+            </div>
+
+            <pre class="prompt-output" id="negative-output-preview"></pre>
+          </div>
+
+          <!-- Step 4: Bilingual Side-by-Side Verification Card -->
+          <div class="tile">
+            <div class="tile-header">
+              <div>
+                <p class="tile-eyebrow" data-i18n="verify_eyebrow">Step 4 · Meaning verification</p>
+                <h3 class="tile-title" data-i18n="verify_title">Bilingual Summary &amp; Why This Prompt Works</h3>
+              </div>
+              <span class="pill-tag neutral" lang="si">සිංහල + தமிழ்</span>
+            </div>
+
+            <div class="bilingual-grid">
+              <div class="lang-verify-card">
+                <h4 class="lang-verify-title" lang="si">සිංහල අර්ථ පැහැදිලි කිරීම (Sinhala Meaning Summary)</h4>
+                <p class="lang-verify-body" id="verify-sinhala-text" lang="si"></p>
+              </div>
+              <div class="lang-verify-card">
+                <h4 class="lang-verify-title" lang="ta">தமிழ் பொருள் விளக்கம் (Tamil Meaning Summary)</h4>
+                <p class="lang-verify-body" id="verify-tamil-text" lang="ta"></p>
+              </div>
+            </div>
+
+            <div class="why-works-box" id="why-works-text"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- VIEW 2: TEMPLATES -->
+    <section class="view-panel" id="view-templates" aria-label="Ready-made Prompt Templates">
+      <div class="tile">
+        <div class="tile-header">
+          <div>
+            <p class="tile-eyebrow">Sri Lankan Use-Case Library</p>
+            <h2 class="tile-title" data-i18n="templates_title">Ready-Made Prompt Templates</h2>
+            <p class="tile-subtitle">Select any curated template to pre-fill the Prompt Builder with structured clarifying inputs.</p>
+          </div>
+          <div class="field-group filter-field-wide">
+            <label class="field-label" for="template-search">Search templates</label>
+            <input type="search" class="input-control" id="template-search" placeholder="Search by topic, Sinhala, Tamil..." oninput="renderTemplates()">
+          </div>
+        </div>
+
+        <div class="chip-grid" id="template-cat-filters">
+          <button type="button" class="choice-chip is-active" onclick="setTemplateFilter('all')">All</button>
+          <button type="button" class="choice-chip" onclick="setTemplateFilter('social')">Social Media</button>
+          <button type="button" class="choice-chip" onclick="setTemplateFilter('academic')">Academic &amp; Study</button>
+          <button type="button" class="choice-chip" onclick="setTemplateFilter('video')">Video &amp; Image</button>
+          <button type="button" class="choice-chip" onclick="setTemplateFilter('daily')">Daily Life &amp; CV</button>
+          <button type="button" class="choice-chip" onclick="setTemplateFilter('research')">Research</button>
+          <button type="button" class="choice-chip" onclick="setTemplateFilter('coding')">Coding AI</button>
+        </div>
+      </div>
+
+      <div class="card-grid" id="templates-grid"></div>
+    </section>
+
+    <!-- VIEW 3: SAVED FAVOURITE PROMPTS -->
+    <section class="view-panel" id="view-saved" aria-label="Saved Favourite Prompts">
+      <div class="tile">
+        <div class="tile-header">
+          <div>
+            <p class="tile-eyebrow">Personal Library</p>
+            <h2 class="tile-title" data-i18n="saved_title">Saved Favourite Prompts</h2>
+            <p class="tile-subtitle">Bookmarked prompts persist automatically across sessions with folder tagging.</p>
+          </div>
+          <div class="action-group">
+            <div class="field-group filter-field-wide">
+              <label class="field-label" for="saved-search">Search saved prompts</label>
+              <input type="search" class="input-control" id="saved-search" placeholder="Filter saved prompts..." oninput="renderSaved()">
+            </div>
+            <div class="field-group">
+              <label class="field-label" for="saved-folder-filter">Folder / Tag</label>
+              <select class="select-control" id="saved-folder-filter" onchange="renderSaved()">
+                <option value="all">All folders</option>
+                <option value="Social Media">Social Media</option>
+                <option value="Academic">Academic</option>
+                <option value="Video &amp; Image">Video &amp; Image</option>
+                <option value="Coding">Coding</option>
+                <option value="Daily Life">Daily Life</option>
+                <option value="General">General</option>
+              </select>
+            </div>
+            <button type="button" class="btn-secondary" onclick="exportAllSavedMarkdown()">
+              <i data-lucide="download" aria-hidden="true"></i>
+              <span>Export .md</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div id="saved-container"></div>
+    </section>
+
+    <!-- VIEW 4: GENERATION HISTORY -->
+    <section class="view-panel" id="view-history" aria-label="Prompt Generation History">
+      <div class="tile">
+        <div class="tile-header">
+          <div>
+            <p class="tile-eyebrow">Activity Log</p>
+            <h2 class="tile-title" data-i18n="history_title">Generation History</h2>
+            <p class="tile-subtitle">Reopen any previous prompt generation to refine, copy, or reuse it.</p>
+          </div>
+          <div class="action-group">
+            <div class="field-group filter-field-wide">
+              <label class="field-label" for="history-search">Search history</label>
+              <input type="search" class="input-control" id="history-search" placeholder="Search ideas or platforms..." oninput="renderHistory()">
+            </div>
+            <button type="button" class="btn-secondary" onclick="exportHistoryTxt()">
+              <i data-lucide="download" aria-hidden="true"></i>
+              <span>Export .txt</span>
+            </button>
+            <button type="button" class="btn-danger" id="clear-history-btn" onclick="clearAllHistory(this)">Clear history</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="history-container"></div>
+    </section>
+
+    <!-- VIEW 5: SETTINGS, RESEARCH COMPARISON & ROADMAP -->
+    <section class="view-panel" id="view-settings" aria-label="Settings and Development Roadmap">
+      <div class="settings-grid">
+        <!-- Preferences -->
+        <div class="tile">
+          <div class="tile-header">
+            <div>
+              <p class="tile-eyebrow">Preferences</p>
+              <h2 class="tile-title" data-i18n="settings_prefs_title">Language, AI &amp; Appearance</h2>
+            </div>
+          </div>
+
+          <div class="field-row-2">
+            <div class="field-group">
+              <label class="field-label" for="set-ui-lang">Interface language</label>
+              <select class="select-control" id="set-ui-lang" onchange="setInterfaceLanguage(this.value)">
+                <option value="en">English (UK)</option>
+                <option value="si">සිංහල (Sinhala)</option>
+                <option value="ta">தமிழ் (Tamil)</option>
+              </select>
+            </div>
+            <div class="field-group">
+              <label class="field-label" for="set-default-input">Default input language</label>
+              <select class="select-control" id="set-default-input" onchange="updateSettingsFromControls()">
+                <option value="auto">Auto-detect</option>
+                <option value="sinhala">Sinhala</option>
+                <option value="tamil">Tamil</option>
+                <option value="singlish">Singlish</option>
+                <option value="tanglish">Tanglish</option>
+                <option value="english">English</option>
+              </select>
+            </div>
+            <div class="field-group">
+              <label class="field-label" for="set-default-platform">Default target AI tool</label>
+              <select class="select-control" id="set-default-platform" onchange="updateSettingsFromControls()">
+                <option value="ChatGPT">ChatGPT</option>
+                <option value="Gemini">Gemini</option>
+                <option value="Claude">Claude</option>
+                <option value="Midjourney">Midjourney</option>
+                <option value="Video AI">Video AI</option>
+                <option value="Coding AI">Coding AI</option>
+              </select>
+            </div>
+            <div class="field-group">
+              <label class="field-label" for="set-default-var">Default prompt variation</label>
+              <select class="select-control" id="set-default-var" onchange="updateSettingsFromControls()">
+                <option value="all">All 3 Variations</option>
+                <option value="basic">Basic</option>
+                <option value="detailed">Detailed</option>
+                <option value="creative">Creative</option>
+              </select>
+            </div>
+            <div class="field-group">
+              <label class="field-label" for="set-theme">Colour theme</label>
+              <select class="select-control" id="set-theme" onchange="applyTheme(this.value)">
+                <option value="light">Light Mode</option>
+                <option value="dark">Dark Mode</option>
+              </select>
+            </div>
+            <div class="field-group">
+              <label class="field-label" for="set-font-size">Script font size</label>
+              <select class="select-control" id="set-font-size" onchange="applyFontSize(this.value)">
+                <option value="small">Small</option>
+                <option value="medium">Medium</option>
+                <option value="large">Large (Accessible)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Storage & Export -->
+        <div class="tile">
+          <div class="tile-header">
+            <div>
+              <p class="tile-eyebrow">Storage &amp; Export</p>
+              <h2 class="tile-title">Workspace Data &amp; API Architecture</h2>
+            </div>
+          </div>
+
+          <div class="field-row-3">
+            <div class="clarity-box clarity-box-center">
+              <span class="field-hint">Saved</span>
+              <strong class="clarity-score-num" id="stat-saved">0</strong>
+            </div>
+            <div class="clarity-box clarity-box-center">
+              <span class="field-hint">History</span>
+              <strong class="clarity-score-num" id="stat-history">0</strong>
+            </div>
+            <div class="clarity-box clarity-box-center">
+              <span class="field-hint">Drafts</span>
+              <strong class="clarity-score-num" id="stat-drafts">0</strong>
+            </div>
+          </div>
+
+          <p class="tile-subtitle">
+            Security principle: Private AI API keys never reside in frontend JavaScript. Phase 1 runs deterministically offline in-browser via the Local Engine; Phase 2 routes <code>fetchGeminiPrompts(ideaText, options)</code> through a rate-limited backend proxy to Gemini 1.5 Flash.
+          </p>
+
+          <div class="action-group">
+            <button type="button" class="btn-secondary" onclick="exportAllSavedMarkdown()">Export Saved (.md)</button>
+            <button type="button" class="btn-secondary" onclick="exportHistoryTxt()">Export History (.txt)</button>
+            <button type="button" class="btn-secondary" onclick="exportWorkspaceJson()">Export Backup (.json)</button>
+            <button type="button" class="btn-danger" id="reset-all-btn" onclick="resetAllWorkspace(this)">Reset All Data</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Research Comparison: Method A vs Method B -->
+      <div class="tile">
+        <div class="tile-header">
+          <div>
+            <p class="tile-eyebrow">Part 9 · Research Evaluation</p>
+            <h2 class="tile-title">Method A (Direct Translation) vs Method B (PromptWay Optimisation)</h2>
+            <p class="tile-subtitle">Evaluating whether intent-aware 5-block prompt engineering outperforms literal Sinhala and Tamil translation.</p>
+          </div>
+          <div class="segmented-track" role="group" aria-label="Research comparison case">
+            <button type="button" class="seg-btn is-active" id="cmp-btn-0" onclick="selectResearchCase(0)">Sinhala YouTube</button>
+            <button type="button" class="seg-btn" id="cmp-btn-1" onclick="selectResearchCase(1)">Singlish Business</button>
+            <button type="button" class="seg-btn" id="cmp-btn-2" onclick="selectResearchCase(2)">Tamil Study</button>
+          </div>
+        </div>
+
+        <div class="comparison-grid" id="research-comparison-body"></div>
+      </div>
+
+      <!-- Development Roadmap & 12-Item Checklist -->
+      <div class="tile">
+        <div class="tile-header">
+          <div>
+            <p class="tile-eyebrow">Parts 8 &amp; 10 · Development Roadmap</p>
+            <h2 class="tile-title">Phased Delivery Plan &amp; Implementation Checklist</h2>
+          </div>
+          <span class="pill-tag" id="checklist-progress-pill">9 / 12 completed</span>
+        </div>
+
+        <div class="roadmap-phases-grid">
+          <div class="lang-verify-card">
+            <span class="pill-tag">Phase 1 · Core MVP</span>
+            <p class="lang-verify-body">Responsive Sinhala/Tamil/English UI, 6 categories, clarifying questions, 5-block rule-based engine, Basic/Detailed/Creative cards, local Saved &amp; History, Light/Dark themes.</p>
+          </div>
+          <div class="lang-verify-card">
+            <span class="pill-tag neutral">Phase 2 · AI Intelligence Layer</span>
+            <p class="lang-verify-body">Secure Node.js/FastAPI backend, Gemini 1.5 Flash API hook (<code>fetchGeminiPrompts</code>), free-form Sinhala/Tamil/Singlish/Tanglish intent parsing, voice-to-text, prompt remixing.</p>
+          </div>
+          <div class="lang-verify-card">
+            <span class="pill-tag neutral">Phase 3 · Community &amp; Cloud</span>
+            <p class="lang-verify-body">Google Sign-In, cloud sync across mobile and web, offline draft queue, custom user templates, PDF/TXT/Markdown export, usage limits.</p>
+          </div>
+        </div>
+
+        <div class="checklist-grid" id="roadmap-checklist"></div>
+      </div>
+    </section>
+
+    <footer class="app-footer">
+      <span>PromptWay · AI-Powered Prompt Builder &amp; Optimiser for Sinhala and Tamil Speakers</span>
+      <span>Built from PromptWay Master Project Specification &amp; MAPT Assignment Research (University of Vocational Technology)</span>
+    </footer>
+  </div>
+
+  <api-shim></api-shim>
+
+  <dialog class="language-tip" id="language-accuracy-tip" aria-labelledby="language-tip-title" aria-describedby="language-tip-copy">
+    <div class="language-tip-header">
+      <span class="language-tip-icon" aria-hidden="true">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m5 8 6 6m-7 0 6-6 2-5H2m5-2v2m7 19 5-11 5 11m-8-4h6" transform="translate(-1 0)"/>
+        </svg>
+      </span>
+      <button type="button" class="language-tip-close" id="language-tip-close" aria-label="Close language recommendation" autofocus>
+        <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="m6 6 12 12M18 6 6 18"/></svg>
+      </button>
+    </div>
+    <h2 id="language-tip-title">Get Better AI Results</h2>
+    <div class="language-tip-copy" id="language-tip-copy">
+      <p lang="en">For better accuracy, we recommend typing your ideas using native Sinhala or Tamil characters instead of Singlish or Tanglish.</p>
+      <p lang="si">වඩාත් නිවැරදි සහ ගුණාත්මක AI prompts ලබාගැනීමට සිංහල අක්ෂර භාවිත කර ඔබගේ අදහස ඇතුළත් කරන්න.</p>
+      <p lang="ta">மேலும் துல்லியமான AI Prompt-களைப் பெற, உங்கள் கருத்துகளைத் தமிழ் எழுத்துகளில் உள்ளிடவும்.</p>
+      <p class="language-tip-note" lang="en">Singlish and Tanglish are still supported, but accuracy may vary.</p>
+    </div>
+    <label class="language-tip-preference" for="language-tip-remember">
+      <input type="checkbox" id="language-tip-remember">
+      <span>Don't show this again</span>
+    </label>
+    <button type="button" class="btn-primary" id="language-tip-start">Got it — Let's get started</button>
+  </dialog>
+
+  <script>
+    // Independent UI preference; does not read or change prompt generation state.
+    document.addEventListener('DOMContentLoaded', () => {
+      const preferenceKey = 'promptway.languageAccuracyTip.dismissed';
+      try {
+        if (localStorage.getItem(preferenceKey) === 'true') return;
+      } catch (_) { /* The recommendation still works when storage is unavailable. */ }
+
+      const dialog = document.getElementById('language-accuracy-tip');
+      const previousFocus = document.activeElement;
+      function dismissTip() {
+        if (document.getElementById('language-tip-remember').checked) {
+          try { localStorage.setItem(preferenceKey, 'true'); } catch (_) { /* Keep dismissal available. */ }
+        }
+        dialog.close();
+      }
+      document.getElementById('language-tip-close').addEventListener('click', dismissTip);
+      document.getElementById('language-tip-start').addEventListener('click', dismissTip);
+      dialog.addEventListener('cancel', event => {
+        event.preventDefault();
+        dismissTip();
+      });
+      dialog.addEventListener('close', () => {
+        document.documentElement.classList.remove('language-tip-open');
+        const target = previousFocus && previousFocus !== document.body && previousFocus.isConnected
+          ? previousFocus : document.getElementById('idea-textarea');
+        if (target) target.focus({ preventScroll: true });
+      });
+      dialog.showModal();
+      document.documentElement.classList.add('language-tip-open');
+    });
+  </script>
+
+  <script>
+    // =========================================================================
+    // 1. MULTILINGUAL UI DICTIONARY (English, සිංහල, தமிழ்)
+    // =========================================================================
+    const I18N = {
+      en: {
+        tagline: `Your Ideas. Better AI Prompts — Sinhala, Tamil, Singlish & Tanglish to Optimised English.`,
+        nav_builder: `Prompt Builder`,
+        nav_templates: `Templates`,
+        nav_saved: `Saved`,
+        nav_history: `History`,
+        nav_settings: `Settings & Roadmap`,
+        step_1_eyebrow: `Step 1 · Express your idea`,
+        builder_input_title: `Multilingual Prompt Workspace`,
+        label_input_lang: `Input language`,
+        label_category: `Prompt category`,
+        label_target_ai: `Target AI platform`,
+        label_samples: `Quick sample ideas`,
+        label_your_idea: `Describe your idea in Sinhala, Tamil, Singlish, Tanglish, or English`,
+        placeholder_idea: `Type or speak your idea here — e.g., මට YouTube වීඩියෝ එකකට script එකක් හදාගන්න ඕන...`,
+        btn_voice: `Voice input`,
+        btn_save_draft: `Save draft`,
+        btn_drafts: `Drafts`,
+        btn_clear: `Clear`,
+        btn_generate: `Generate Prompts`,
+        drafts_title: `Saved Offline Drafts`,
+        step_2_eyebrow: `Step 2 · Smart clarification`,
+        smart_questions_title: `Category Clarifying Questions`,
+        clarity_label: `Prompt Clarity Score`,
+        step_3_eyebrow: `Step 3 · Optimised output`,
+        results_title: `Optimised English Prompts`,
+        framework_label: `5-Block Universal Framework Coverage`,
+        refine_label: `Refine or remix output`,
+        negative_title: `Negative Prompt / Avoid List`,
+        verify_eyebrow: `Step 4 · Meaning verification`,
+        verify_title: `Bilingual Summary & Why This Prompt Works`,
+        templates_title: `Ready-Made Prompt Templates`,
+        saved_title: `Saved Favourite Prompts`,
+        history_title: `Generation History`,
+        settings_prefs_title: `Language, AI & Appearance`
+      },
+      si: {
+        tagline: `ඔබේ අදහස්. වඩා හොඳ AI Prompts — සිංහල, දෙමළ, Singlish සහ Tanglish වලින් නිවැරදි ඉංග්‍රීසි prompts.`,
+        nav_builder: `Prompt සාදන්නා`,
+        nav_templates: `සැකිලි`,
+        nav_saved: `සුරැකි ඒවා`,
+        nav_history: `ඉතිහාසය`,
+        nav_settings: `සැකසුම් සහ සැලැස්ම`,
+        step_1_eyebrow: `පියවර 1 · ඔබේ අදහස ලියන්න`,
+        builder_input_title: `බහුභාෂා Prompt වැඩබිම`,
+        label_input_lang: `ආදාන භාෂාව`,
+        label_category: `වර්ගය තෝරන්න`,
+        label_target_ai: `ඉලක්කගත AI මෙවලම`,
+        label_samples: `ඉක්මන් උදාහරණ අදහස්`,
+        label_your_idea: `ඔබේ අදහස සිංහල, දෙමළ, Singlish, Tanglish හෝ ඉංග්‍රීසියෙන් ලියන්න`,
+        placeholder_idea: `මෙහි ඔබේ අදහස ලියන්න හෝ කතා කරන්න — උදා: මට YouTube වීඩියෝ එකකට script එකක් හදාගන්න ඕන...`,
+        btn_voice: `හඬ ආදානය`,
+        btn_save_draft: `කෙටුම්පත සුරකින්න`,
+        btn_drafts: `කෙටුම්පත්`,
+        btn_clear: `මකන්න`,
+        btn_generate: `Prompts සාදන්න`,
+        drafts_title: `සුරැකි නොබැඳි කෙටුම්පත්`,
+        step_2_eyebrow: `පියවර 2 · පැහැදිලි කිරීමේ ප්‍රශ්න`,
+        smart_questions_title: `වර්ගයට අදාළ ප්‍රශ්න`,
+        clarity_label: `Prompt පැහැදිලිතා ලකුණු`,
+        step_3_eyebrow: `පියවර 3 · ප්‍රශස්ත ප්‍රතිඵල`,
+        results_title: `ප්‍රශස්ත ඉංග්‍රීසි Prompts`,
+        framework_label: `කොටස් 5 විශ්වීය රාමු ආවරණය`,
+        refine_label: `ප්‍රතිඵලය සකසන්න හෝ වෙනස් කරන්න`,
+        negative_title: `වළක්වා ගත යුතු දේ (Negative Prompt)`,
+        verify_eyebrow: `පියවර 4 · අර්ථය තහවුරු කිරීම`,
+        verify_title: `ද්විභාෂා සාරාංශය සහ මෙය ක්‍රියා කරන හේතුව`,
+        templates_title: `සූදානම් කළ Prompt සැකිලි`,
+        saved_title: `සුරැකි ප්‍රියතම Prompts`,
+        history_title: `පෙර නිර්මාණ ඉතිහාසය`,
+        settings_prefs_title: `භාෂාව, AI සහ පෙනුම`
+      },
+      ta: {
+        tagline: `உங்கள் எண்ணங்கள். சிறந்த AI Prompts — சிங்களம், தமிழ், Singlish & Tanglish இலிருந்து துல்லியமான ஆங்கிலம்.`,
+        nav_builder: `Prompt உருவாக்கி`,
+        nav_templates: `மாதிரிகள்`,
+        nav_saved: `சேமித்தவை`,
+        nav_history: `வரலாறு`,
+        nav_settings: `அமைப்புகள் & திட்டம்`,
+        step_1_eyebrow: `படி 1 · உங்கள் கருத்தை உள்ளிடவும்`,
+        builder_input_title: `பன்மொழி Prompt பணியிடம்`,
+        label_input_lang: `உள்ளீட்டு மொழி`,
+        label_category: `வகை`,
+        label_target_ai: `இலக்கு AI தளம்`,
+        label_samples: `விரைவு மாதிரி கருத்துக்கள்`,
+        label_your_idea: `சிங்களம், தமிழ், Singlish, Tanglish அல்லது ஆங்கிலத்தில் உங்கள் கருத்தை எழுதுங்கள்`,
+        placeholder_idea: `உங்கள் கருத்தை இங்கே தட்டச்சு செய்யவும் — எ.கா: எனக்கு A/L உயிரியல் பாடத்திற்கு ஒரு சுருக்கம் வேண்டும்...`,
+        btn_voice: `குரல் உள்ளீடு`,
+        btn_save_draft: `வரைவைச் சேமி`,
+        btn_drafts: `வரைவுகள்`,
+        btn_clear: `அழி`,
+        btn_generate: `Prompts உருவாக்கு`,
+        drafts_title: `சேமிக்கப்பட்ட ஆஃப்லைன் வரைவுகள்`,
+        step_2_eyebrow: `படி 2 · தெளிவுபடுத்தல் கேள்விகள்`,
+        smart_questions_title: `வகை சார்ந்த கேள்விகள்`,
+        clarity_label: `Prompt தெளிவு மதிப்பெண்`,
+        step_3_eyebrow: `படி 3 · மேம்படுத்தப்பட்ட வெளியீடு`,
+        results_title: `மேம்படுத்தப்பட்ட ஆங்கில Prompts`,
+        framework_label: `5-பகுதி உலகளாவிய கட்டமைப்பு`,
+        refine_label: `வெளியீட்டை செம்மைப்படுத்து`,
+        negative_title: `தவிர்க்க வேண்டியவை (Negative Prompt)`,
+        verify_eyebrow: `படி 4 · பொருள் சரிபார்ப்பு`,
+        verify_title: `இருமொழி சுருக்கம் & ஏன் இது சிறப்பாக செயல்படுகிறது`,
+        templates_title: `தயார்நிலை Prompt மாதிரிகள்`,
+        saved_title: `சேமிக்கப்பட்ட பிடித்த Prompts`,
+        history_title: `உருவாக்க வரலாறு`,
+        settings_prefs_title: `மொழி, AI மற்றும் தோற்றம்`
+      }
+    };
+
+    // =========================================================================
+    // 2. DOMAIN DATA: CATEGORIES, CLARIFYING QUESTIONS, SAMPLES, TEMPLATES
+    // =========================================================================
+    const CATEGORY_LABELS = {
+      social: `Social Media Post`,
+      video: `Video Generation`,
+      research: `Research`,
+      academic: `Academic Assignment`,
+      daily: `Daily Life`,
+      general: `General / Custom Idea`
+    };
+
+    const CATEGORY_QUESTIONS = {
+      social: [
+        { id: `soc_platform`, label: `Social platform`, type: `select`, options: [`Instagram`, `Facebook`, `TikTok`, `LinkedIn`, `WhatsApp Status`] },
+        { id: `soc_brand`, label: `Brand or page name`, type: `text`, placeholder: `e.g., Lanka Bakehouse, Ceylon Glow` },
+        { id: `soc_audience`, label: `Target audience`, type: `select`, options: [`Sri Lankan youth & young adults`, `Local families & shoppers`, `Small business clients`, `University students`, `Corporate / HR professionals`] },
+        { id: `soc_goal`, label: `Campaign goal`, type: `select`, options: [`Drive sales & orders`, `Build brand awareness`, `Boost comments & shares`, `Announce a launch or offer`] },
+        { id: `soc_tone`, label: `Tone`, type: `select`, options: [`Friendly & warm`, `Professional`, `Persuasive`, `Funny & relatable`, `Emotional`] },
+        { id: `soc_options`, label: `Length & options`, type: `select`, options: [`3 short caption options`, `3 medium options`, `5 short punchy hooks`, `1 detailed long-form post`] }
+      ],
+      video: [
+        { id: `vid_shot`, label: `Camera shot type`, type: `select`, options: [`Drone aerial wide shot`, `Cinematic wide establishing shot`, `Medium tracking shot`, `Close-up detail shot`, `First-person POV`] },
+        { id: `vid_movement`, label: `Single camera movement`, type: `select`, options: [`Slow smooth forward glide`, `Gentle pan left to right`, `Steady orbit around subject`, `Locked static tripod frame`] },
+        { id: `vid_mood`, label: `Lighting & mood`, type: `select`, options: [`Golden hour warm sunlight`, `Misty tropical morning`, `Vibrant natural daylight`, `Moody cinematic twilight`] },
+        { id: `vid_style`, label: `Visual style`, type: `select`, options: [`Photorealistic 4K cinema`, `Documentary realism`, `Warm travel film`, `3D stylised animation`] },
+        { id: `vid_audio`, label: `Audio requirement`, type: `select`, options: [`Natural ambient soundscape`, `Soft instrumental background music`, `No audio (silent visual)`] },
+        { id: `vid_duration`, label: `Clip duration`, type: `select`, options: [`5 seconds`, `10 seconds`, `30 seconds`] }
+      ],
+      research: [
+        { id: `res_topic`, label: `Focused topic`, type: `text`, placeholder: `e.g., Sri Lankan solar adoption, AI in Sinhala NLP` },
+        { id: `res_level`, label: `Academic / work level`, type: `select`, options: [`University undergraduate`, `A/L student`, `O/L student`, `Industry professional`] },
+        { id: `res_purpose`, label: `Purpose`, type: `select`, options: [`Research report`, `Presentation slides`, `Literature review / thesis`, `Quick structured learning`] },
+        { id: `res_need`, label: `Deliverable needed`, type: `select`, options: [`Structured outline & key questions`, `Executive summary with verified points`, `Comparative analysis table`, `Step-by-step concept breakdown`] },
+        { id: `res_sources`, label: `Source priority`, type: `select`, options: [`Peer-reviewed journals & academic papers`, `Government & Central Bank reports`, `Reputable international & local news`, `General verified educational sources`] }
+      ],
+      academic: [
+        { id: `aca_type`, label: `Assignment type`, type: `select`, options: [`Essay`, `Technical report`, `Presentation deck`, `Case study`, `Exam revision guide`] },
+        { id: `aca_level`, label: `Study level`, type: `select`, options: [`G.C.E. A/L`, `University B.Tech / Degree`, `G.C.E. O/L`, `Diploma / NVQ`] },
+        { id: `aca_words`, label: `Target word count`, type: `select`, options: [`500 words`, `1,000 words`, `2,000 words`, `3,000+ words`] },
+        { id: `aca_help`, label: `Help needed (Socratic)`, type: `select`, options: [`Structured outline & research questions`, `Clear concept explanation`, `Structure & argument critique`, `Grammar & clarity checklist`] }
+      ],
+      daily: [
+        { id: `day_task`, label: `Task type`, type: `select`, options: [`Professional email`, `Formal request letter`, `Actionable checklist`, `Daily schedule plan`, `Decision pros & cons`] },
+        { id: `day_goal`, label: `Goal to achieve`, type: `text`, placeholder: `e.g., Request internship leave politely` },
+        { id: `day_tone`, label: `Tone`, type: `select`, options: [`Polite & respectful`, `Direct & clear`, `Friendly`, `Formal & official`] },
+        { id: `day_length`, label: `Output length`, type: `select`, options: [`Short (under 120 words)`, `Medium (150–250 words)`, `Detailed step-by-step`] }
+      ],
+      general: [
+        { id: `gen_role`, label: `Preferred AI expertise`, type: `text`, placeholder: `e.g., Senior brand designer, Python engineer` },
+        { id: `gen_audience`, label: `Target audience`, type: `select`, options: [`General Sri Lankan audience`, `Clients & customers`, `Developers & technical team`, `Students & learners`] },
+        { id: `gen_tone`, label: `Tone & style`, type: `select`, options: [`Clear & practical`, `Minimalist & modern`, `Creative & expressive`, `Technical & precise`] },
+        { id: `gen_format`, label: `Output format`, type: `select`, options: [`Structured bullet points`, `Ready-to-use deliverable`, `Step-by-step guide`, `Visual composition spec`] }
+      ]
+    };
+
+    const SAMPLE_IDEAS = [
+      {
+        lang: `sinhala`,
+        category: `social`,
+        platform: `ChatGPT`,
+        text: `මට YouTube වීඩියෝ එකකට script එකක් හදාගන්න ඕන — ලංකාවේ තරුණයන්ට AI tools පාවිච්චි කරලා freelancing පටන් ගන්න හැටි ගැන.`,
+        answers: {
+          soc_platform: `TikTok`,
+          soc_brand: `Lanka Tech Guide`,
+          soc_audience: `Sri Lankan youth & young adults`,
+          soc_goal: `Boost comments & shares`,
+          soc_tone: `Friendly & warm`,
+          soc_options: `1 detailed long-form post`
+        }
+      },
+      {
+        lang: `singlish`,
+        category: `social`,
+        platform: `ChatGPT`,
+        text: `Mage podi cake shop ekata Instagram post caption 3k hadanna ona. Avurudu season ekata special butter cake saha ribbon cake offers thiyanawa.`,
+        answers: {
+          soc_platform: `Instagram`,
+          soc_brand: `Serendib Crumbs`,
+          soc_audience: `Local families & shoppers`,
+          soc_goal: `Drive sales & orders`,
+          soc_tone: `Friendly & warm`,
+          soc_options: `3 short caption options`
+        }
+      },
+      {
+        lang: `tamil`,
+        category: `academic`,
+        platform: `Gemini`,
+        text: `எனக்கு A/L உயிரியல் பாடத்தில் ஒளிச்சேர்க்கை (Photosynthesis) பற்றி எளிமையான குறிப்புகள் மற்றும் தேர்வுக் கேள்விகள் வேண்டும்.`,
+        answers: {
+          aca_type: `Exam revision guide`,
+          aca_level: `G.C.E. A/L`,
+          aca_words: `1,000 words`,
+          aca_help: `Clear concept explanation`
+        }
+      },
+      {
+        lang: `tanglish`,
+        category: `general`,
+        platform: `Midjourney`,
+        text: `Enakku oru pudhiya Ceylon tea brand logo design idea venum — minimalist leaf and mountain style la.`,
+        answers: {
+          gen_role: `Brand identity & logo designer`,
+          gen_audience: `Clients & customers`,
+          gen_tone: `Minimalist & modern`,
+          gen_format: `Visual composition spec`
+        }
+      },
+      {
+        lang: `english`,
+        category: `video`,
+        platform: `Video AI`,
+        text: `Blue Sri Lankan train crossing the Nine Arch Bridge in Ella surrounded by misty green tea plantations at sunrise.`,
+        answers: {
+          vid_shot: `Drone aerial wide shot`,
+          vid_movement: `Slow smooth forward glide`,
+          vid_mood: `Misty tropical morning`,
+          vid_style: `Photorealistic 4K cinema`,
+          vid_audio: `Natural ambient soundscape`,
+          vid_duration: `10 seconds`
+        }
+      },
+      {
+        lang: `english`,
+        category: `general`,
+        platform: `Coding AI`,
+        text: `Build a Python FastAPI endpoint that validates Sinhala, Tamil, Singlish, and Tanglish prompt requests with rate limiting and clean JSON errors.`,
+        answers: {
+          gen_role: `Senior Python backend architect`,
+          gen_audience: `Developers & technical team`,
+          gen_tone: `Technical & precise`,
+          gen_format: `Ready-to-use deliverable`
+        }
+      }
+    ];
+
+    const TEMPLATES = [
+      {
+        id: `tpl-yt-si`,
+        filterCat: `social`,
+        category: `social`,
+        platform: `ChatGPT`,
+        lang: `sinhala`,
+        tag: `YouTube & Reels`,
+        title: `Sinhala YouTube Hook & Script Builder`,
+        idea: `මට තාක්ෂණික YouTube වීඩියෝ එකකට මිනිත්තු 5ක ආකර්ෂණීය script එකක් සහ thumbnail title අදහස් 3ක් හදාගන්න ඕන.`,
+        answers: { soc_platform: `TikTok`, soc_brand: `Tech Sinhala`, soc_audience: `Sri Lankan youth & young adults`, soc_goal: `Boost comments & shares`, soc_tone: `Friendly & warm`, soc_options: `3 medium options` }
+      },
+      {
+        id: `tpl-cake-sg`,
+        filterCat: `social`,
+        category: `social`,
+        platform: `ChatGPT`,
+        lang: `singlish`,
+        tag: `Small Business`,
+        title: `Singlish Small Business Promo & WhatsApp Ad`,
+        idea: `Mage home-based clothing business ekata aluth linen collection eka promote karanna Instagram saha WhatsApp Status caption tikak hadala denna.`,
+        answers: { soc_platform: `Instagram`, soc_brand: `Kandy Linen Studio`, soc_audience: `Local families & shoppers`, soc_goal: `Drive sales & orders`, soc_tone: `Persuasive`, soc_options: `3 short caption options` }
+      },
+      {
+        id: `tpl-bio-ta`,
+        filterCat: `academic`,
+        category: `academic`,
+        platform: `Gemini`,
+        lang: `tamil`,
+        tag: `G.C.E. A/L Study`,
+        title: `Tamil A/L Exam Concept & Practice Tutor`,
+        idea: `எனக்கு A/L உயிரியல் மற்றும் வேதியியல் பாடங்களுக்கு எளிமையான மீள்பார்வை சுருக்கம் மற்றும் மாதிரி வினாக்கள் தயார் செய்ய வேண்டும்.`,
+        answers: { aca_type: `Exam revision guide`, aca_level: `G.C.E. A/L`, aca_words: `1,000 words`, aca_help: `Clear concept explanation` }
+      },
+      {
+        id: `tpl-univ-socratic`,
+        filterCat: `academic`,
+        category: `academic`,
+        platform: `Claude`,
+        lang: `english`,
+        tag: `University Integrity`,
+        title: `Socratic Assignment Outline (No Plagiarism)`,
+        idea: `Help me structure a university media technology assignment on mobile AI accessibility in South Asia without writing the essay for me.`,
+        answers: { aca_type: `Technical report`, aca_level: `University B.Tech / Degree`, aca_words: `2,000 words`, aca_help: `Structured outline & research questions` }
+      },
+      {
+        id: `tpl-tea-logo`,
+        filterCat: `video`,
+        category: `general`,
+        platform: `Midjourney`,
+        lang: `tanglish`,
+        tag: `Brand Logo`,
+        title: `Tanglish Artisan Ceylon Tea Brand Identity`,
+        idea: `Enakku Ceylon green tea brand ku oru modern minimalist packaging and logo concept venum, warm emerald and gold feel la.`,
+        answers: { gen_role: `Luxury packaging & logo designer`, gen_audience: `Clients & customers`, gen_tone: `Minimalist & modern`, gen_format: `Visual composition spec` }
+      },
+      {
+        id: `tpl-ella-video`,
+        filterCat: `video`,
+        category: `video`,
+        platform: `Video AI`,
+        lang: `english`,
+        tag: `Cinematic B-Roll`,
+        title: `Ella Nine Arch Bridge Drone B-Roll`,
+        idea: `Cinematic morning drone shot following the blue train crossing Nine Arch Bridge in Ella through soft valley mist.`,
+        answers: { vid_shot: `Drone aerial wide shot`, vid_movement: `Slow smooth forward glide`, vid_mood: `Misty tropical morning`, vid_style: `Photorealistic 4K cinema`, vid_audio: `Natural ambient soundscape`, vid_duration: `10 seconds` }
+      },
+      {
+        id: `tpl-cv-daily`,
+        filterCat: `daily`,
+        category: `daily`,
+        platform: `Claude`,
+        lang: `singlish`,
+        tag: `Career & CV`,
+        title: `Graduate CV Bullets & Internship Cover Email`,
+        idea: `Mata media arts degree internship ekakata apply karanna polite cover email ekak saha CV bullet points 4k hadaganna ona.`,
+        answers: { day_task: `Professional email`, day_goal: `Apply for a media production internship`, day_tone: `Polite & respectful`, day_length: `Medium (150–250 words)` }
+      },
+      {
+        id: `tpl-leave-ta`,
+        filterCat: `daily`,
+        category: `daily`,
+        platform: `ChatGPT`,
+        lang: `tamil`,
+        tag: `Official Letter`,
+        title: `Tamil-to-English Polite Official Request`,
+        idea: `எனது பல்கலைக்கழக துறைத் தலைவருக்கு கல்விச் சுற்றுலா அனுமதி கேட்டு மரியாதையான ஆங்கிலக் கடிதம் எழுத வேண்டும்.`,
+        answers: { day_task: `Formal request letter`, day_goal: `Request department approval for a field study trip`, day_tone: `Formal & official`, day_length: `Short (under 120 words)` }
+      },
+      {
+        id: `tpl-res-solar`,
+        filterCat: `research`,
+        category: `research`,
+        platform: `Gemini`,
+        lang: `english`,
+        tag: `Literature Review`,
+        title: `Sri Lankan Renewable Energy Research Matrix`,
+        idea: `Compare rooftop solar adoption barriers and policy incentives for Sri Lankan households between 2022 and 2026.`,
+        answers: { res_topic: `Rooftop solar adoption in Sri Lanka`, res_level: `University undergraduate`, res_purpose: `Research report`, res_need: `Comparative analysis table`, res_sources: `Government & Central Bank reports` }
+      },
+      {
+        id: `tpl-code-api`,
+        filterCat: `coding`,
+        category: `general`,
+        platform: `Coding AI`,
+        lang: `english`,
+        tag: `Backend Proxy`,
+        title: `FastAPI Gemini Prompt Proxy with Rate Limit`,
+        idea: `Create a secure Python FastAPI endpoint that accepts Sinhala or Tamil ideas, validates payload size, hides the Gemini API key in environment variables, and returns JSON.`,
+        answers: { gen_role: `Senior Python FastAPI engineer`, gen_audience: `Developers & technical team`, gen_tone: `Technical & precise`, gen_format: `Ready-to-use deliverable` }
+      }
+    ];
+
+    const DEFAULT_NEGATIVE_TAGS = [
+      { id: `blurry`, label: `Blurry focus` },
+      { id: `distorted`, label: `Distorted faces or objects` },
+      { id: `watermark`, label: `Watermarks & logos` },
+      { id: `text`, label: `Unwanted random text` },
+      { id: `inconsistent`, label: `Inconsistent subject appearance` },
+      { id: `oversaturated`, label: `Harsh oversaturated colours` }
+    ];
+
+    const RESEARCH_CASES = [
+      {
+        title: `Case 1 · Sinhala YouTube Script Request`,
+        input: `මට YouTube වීඩියෝ එකකට script එකක් හදාගන්න ඕන — ලංකාවේ තරුණයන්ට AI tools පාවිච්චි කරලා freelancing පටන් ගන්න හැටි.`,
+        methodA: `Make me a script for a YouTube video about how young people in Sri Lanka can use AI tools to start freelancing.`,
+        methodAFlaws: `Missing target audience tone, video pacing, hook structure, Sri Lankan payment/context constraints, and output formatting. ChatGPT produces generic Western advice.`,
+        methodB: `Assigns a Sri Lankan Tech Educator persona, sets youth context, enforces a 60-second hook + 3 actionable freelancing steps + CTA, and formats with [Visual] and [Voiceover] cues.`,
+        metrics: [
+          { name: `Meaning Preservation`, a: `78%`, b: `98%`, aNum: 78, bNum: 98 },
+          { name: `Instruction Clarity`, a: `42%`, b: `94%`, aNum: 42, bNum: 94 },
+          { name: `Platform Suitability`, a: `48%`, b: `96%`, aNum: 48, bNum: 96 },
+          { name: `Output Relevance`, a: `45%`, b: `95%`, aNum: 45, bNum: 95 }
+        ]
+      },
+      {
+        title: `Case 2 · Singlish Small Business IG Promo`,
+        input: `Mage podi cake shop ekata Instagram post caption 3k hadanna ona. Avurudu season ekata special butter cake offers thiyanawa.`,
+        methodA: `Need to make 3 Instagram post captions for my small cake shop. Have special butter cake offers for Avurudu season.`,
+        methodAFlaws: `Broken Singlish syntax carried literally; no brand voice, character length limit, local Sri Lankan cultural nuance, or call-to-action.`,
+        methodB: `Normalises Singlish intent cleanly, adopts a warm Sri Lankan bakery marketer role, generates 3 crisp Instagram captions with Avurudu festive hooks, max 3 hashtags, and WhatsApp order CTA.`,
+        metrics: [
+          { name: `Meaning Preservation`, a: `64%`, b: `97%`, aNum: 64, bNum: 97 },
+          { name: `Instruction Clarity`, a: `39%`, b: `93%`, aNum: 39, bNum: 93 },
+          { name: `Platform Suitability`, a: `50%`, b: `95%`, aNum: 50, bNum: 95 },
+          { name: `Output Relevance`, a: `52%`, b: `94%`, aNum: 52, bNum: 94 }
+        ]
+      },
+      {
+        title: `Case 3 · Tamil A/L Biology Revision`,
+        input: `எனக்கு A/L உயிரியல் பாடத்தில் ஒளிச்சேர்க்கை பற்றி எளிமையான குறிப்புகள் மற்றும் தேர்வுக் கேள்விகள் வேண்டும்.`,
+        methodA: `I want simple notes and exam questions about photosynthesis in A/L biology subject.`,
+        methodAFlaws: `AI does not know the Sri Lankan G.C.E. A/L syllabus depth, academic integrity rules, or whether structured MCQ/essay practice is needed.`,
+        methodB: `Sets a Socratic A/L Biology Tutor role aligned to Sri Lankan G.C.E. A/L depth, requests Light vs Calvin cycle summary + 3 exam-style checking questions + memory cues.`,
+        metrics: [
+          { name: `Meaning Preservation`, a: `74%`, b: `98%`, aNum: 74, bNum: 98 },
+          { name: `Instruction Clarity`, a: `44%`, b: `96%`, aNum: 44, bNum: 96 },
+          { name: `Platform Suitability`, a: `51%`, b: `95%`, aNum: 51, bNum: 95 },
+          { name: `Output Relevance`, a: `49%`, b: `97%`, aNum: 49, bNum: 97 }
+        ]
+      }
+    ];
+
+    const ROADMAP_CHECKLIST = [
+      { id: 1, text: `1. Project setup — Responsive layout architecture & semantic CSS tokens` },
+      { id: 2, text: `2. UI design — PromptWay brand mark, Showroom palette, Sinhala/Tamil Noto typography` },
+      { id: 3, text: `3. Language system — Complete Sinhala, Tamil & English interface toggle` },
+      { id: 4, text: `4. Home screen — 6 Categories, 6 AI platform selectors, samples & voice UI` },
+      { id: 5, text: `5. Smart questions — Dynamic category-specific clarifying inputs & Clarity Score` },
+      { id: 6, text: `6. Prompt engine — 5-Block Universal Framework (Role, Context, Task, Rules, Format)` },
+      { id: 7, text: `7. Results screen — Basic, Detailed & Creative cards + Negative Prompt builder` },
+      { id: 8, text: `8. Saved & History — Bookmarking, folder tagging, search, export & reuse` },
+      { id: 9, text: `9. Settings — Light/Dark theme, accessible script sizing & JSON/MD export` },
+      { id: 10, text: `10. AI integration — Backend proxy & Gemini 1.5 Flash hook (fetchGeminiPrompts)` },
+      { id: 11, text: `11. Testing — Native user evaluation across Sinhala, Tamil, Singlish & Tanglish` },
+      { id: 12, text: `12. Publishing — GitHub repository & live hosted web application` }
+    ];
+
+    // =========================================================================
+    // 3. APPLICATION STATE & ISOLATED GEMINI API HOOK
+    // =========================================================================
+    let appState = {
+      activeView: `builder`,
+      uiLang: `en`,
+      theme: `light`,
+      fontSize: `medium`,
+      engineMode: `groq`,
+      inputLang: `auto`,
+      category: `general`,
+      platform: `ChatGPT`,
+      ideaText: ``,
+      answers: {},
+      inputContext: { text: ``, inherited: [], categoryFromPreset: false },
+      refinement: `none`,
+      variationFilter: `all`,
+      selectedFrameworkBlock: `role`,
+      negativeEnabled: [`blurry`, `distorted`, `watermark`, `text`],
+      customNegatives: [],
+      templateFilter: `all`,
+      researchCaseIdx: 0,
+      savedPrompts: [],
+      historyLog: [],
+      drafts: [],
+      checklistDone: [1, 2, 3, 4, 5, 6, 7, 8, 9],
+      defaults: {
+        inputLang: `auto`,
+        platform: `ChatGPT`,
+        variation: `all`
+      }
+    };
+
+    let currentGenerated = {
+      detectedLang: `Sinhala (සිංහල)`,
+      clarityScore: 86,
+      tips: [],
+      blocks: { role: ``, context: ``, task: ``, constraints: ``, format: `` },
+      basic: ``,
+      detailed: ``,
+      creative: ``,
+      sinhalaSummary: ``,
+      tamilSummary: ``,
+      whyWorks: ``
+    };
+
+    let isRecording = false;
+    let recognitionInstance = null;
+
+    // Track inherited answers separately from clarification values explicitly edited by the user.
+    function relevantAnswers(answers, category) {
+      const ids = new Set((CATEGORY_QUESTIONS[category] || []).map(q => q.id));
+      return Object.fromEntries(Object.entries(answers || {}).filter(([id, value]) => ids.has(id) && typeof value === `string` && value.trim()));
+    }
+
+    function markLoadedContext() {
+      appState.answers = relevantAnswers(appState.answers, appState.category);
+      appState.inputContext = { text: appState.ideaText, inherited: Object.keys(appState.answers), categoryFromPreset: true };
+    }
+
+    function syncIdeaContext() {
+      const context = appState.inputContext || { text: appState.ideaText, inherited: [], categoryFromPreset: false };
+      if (context.text !== appState.ideaText) {
+        // A preset has been edited: invalidate its inherited values once, not on every keystroke.
+        for (const id of context.inherited || []) delete appState.answers[id];
+        if (context.categoryFromPreset && !Object.keys(appState.answers).length) {
+          appState.category = `general`;
+          appState.inputLang = `auto`;
+          const category = document.getElementById(`category-select`);
+          const language = document.getElementById(`input-lang-select`);
+          if (category) category.value = appState.category;
+          if (language) language.value = appState.inputLang;
+        }
+        appState.inputContext = { text: appState.ideaText, inherited: [], categoryFromPreset: false };
+        renderSmartQuestions();
+      }
+      appState.answers = relevantAnswers(appState.answers, appState.category);
+    }
+
+    function emptyGeneration() {
+      return { source: `none`, detectedLang: `?`, clarityScore: 0, tips: [],
+        blocks: { role: ``, context: ``, task: ``, constraints: ``, format: `` },
+        basic: ``, detailed: ``, creative: ``, sinhalaSummary: ``, tamilSummary: ``, whyWorks: `` };
+    }
+
+    // Server-side Groq proxy. API errors never silently become offline results.
+    async function fetchGroqPrompts(ideaText, options) {
+      const response = await fetch(`/api/groq/prompts`, {
+        method: `POST`,
+        headers: { 'Content-Type': `application/json` },
+        signal: AbortSignal.timeout(65000),
+        body: JSON.stringify(Object.assign({ ideaText: ideaText }, options))
+      });
+      const retry = response.headers.get(`Retry-After`);
+      const delay = retry ? (Number.isFinite(Number(retry)) ? Number(retry) * 1000 : Date.parse(retry) - Date.now()) : 0;
+      if (delay > 0 || response.status === 429) startGroqCooldown(delay > 0 ? delay : 60000, !(delay > 0) || response.headers.get(`X-Retry-After-Estimated`) === `true`);
+      const payload = await response.json();
+      if (!response.ok) throw new Error(payload.error || `Generation failed (${response.status}).`);
+      return payload;
+    }
+
+    let generationVersion = 0;
+    let generationPending = false;
+    let groqCooldownUntil = 0;
+    let groqCooldownTimer = null;
+    let groqCooldownEstimated = false;
+
+    function refreshGenerationControls() {
+      const waiting = Date.now() < groqCooldownUntil;
+      const online = appState.engineMode !== `local`;
+      const buttons = document.querySelectorAll(`button[onclick="generatePrompts(true)"], #refine-buttons .mini-btn`);
+      buttons.forEach(button => {
+        button.disabled = generationPending || (online && waiting);
+        if (generationPending) button.setAttribute(`aria-busy`, `true`);
+        else button.removeAttribute(`aria-busy`);
+      });
+      if (waiting && online) {
+        showNotice(`Groq cooldown: ${Math.ceil((groqCooldownUntil - Date.now()) / 1000)} seconds remaining${groqCooldownEstimated ? ` (estimated; retry time was not provided)` : ``}.`, `warn`);
+      }
+    }
+
+    function startGroqCooldown(milliseconds, estimated) {
+      const until = Date.now() + milliseconds;
+      if (until > groqCooldownUntil) {
+        groqCooldownUntil = until;
+        groqCooldownEstimated = estimated;
+      }
+      if (groqCooldownTimer !== null) clearInterval(groqCooldownTimer);
+      refreshGenerationControls();
+      groqCooldownTimer = setInterval(() => {
+        refreshGenerationControls();
+        if (Date.now() >= groqCooldownUntil) {
+          clearInterval(groqCooldownTimer);
+          groqCooldownTimer = null;
+          if (appState.engineMode !== `local`) showNotice(`Cooldown finished. Click Generate Prompts when ready.`, `positive`);
+        }
+      }, 1000);
+    }
+
+    function groqActionBlocked() {
+      if (generationPending) return true;
+      if (appState.engineMode !== `local` && Date.now() < groqCooldownUntil) {
+        refreshGenerationControls();
+        return true;
+      }
+      return false;
+    }
+
+    // =========================================================================
+    // 4. LOCAL INTENT-AWARE 5-BLOCK PROMPT ENGINE
+    // =========================================================================
+    function detectInputLanguage(text, forcedLang) {
+      if (forcedLang && forcedLang !== `auto`) {
+        const labels = {
+          sinhala: `Sinhala (සිංහල)`,
+          tamil: `Tamil (தமிழ்)`,
+          singlish: `Singlish`,
+          tanglish: `Tanglish`,
+          english: `English`
+        };
+        return labels[forcedLang] || `English`;
+      }
+      const t = (text || ``).trim();
+      if (!t) return `English`;
+      if (/[\u0D80-\u0DFF]/.test(t)) return `Sinhala (සිංහල)`;
+      if (/[\u0B80-\u0BFF]/.test(t)) return `Tamil (தமிழ்)`;
+
+      const lower = t.toLowerCase();
+      const singlishTokens = [`mata`, `ekak`, `ekata`, `hadaganna`, `ona`, `mage`, `aluth`, `kiyala`, `karanna`, `honda`, `lankawe`, `kade`, `denna`, `puluwan`, `thiyanawa`, `saha`, `ganna`, `podi`];
+      const tanglishTokens = [`enakku`, `venum`, `epdi`, `pannanum`, `nalla`, `oru`, `thanga`, `kadai`, `padam`, `sollunga`, `ezhuthunga`, `pudhiya`, `seiyanum`, `irukku`, `ku`];
+
+      let siScore = 0;
+      let taScore = 0;
+      for (let i = 0; i < singlishTokens.length; i++) {
+        if (new RegExp(`\\b` + singlishTokens[i] + `\\b`, `i`).test(lower)) siScore++;
+      }
+      for (let j = 0; j < tanglishTokens.length; j++) {
+        if (new RegExp(`\\b` + tanglishTokens[j] + `\\b`, `i`).test(lower)) taScore++;
+      }
+      if (siScore > taScore && siScore > 0) return `Singlish`;
+      if (taScore > siScore && taScore > 0) return `Tanglish`;
+      return `English`;
+    }
+
+    function extractEnglishIntent(rawText, category, answers) {
+      const t = (rawText || ``).trim();
+      if (!t) return `a clear, goal-driven deliverable tailored to Sri Lankan users`;
+
+      const lower = t.toLowerCase();
+
+      // Exact/rich semantic recognisers for common Sinhala, Tamil, Singlish, Tanglish ideas
+      if (lower.includes(`youtube`) && (lower.includes(`freelancing`) || lower.includes(`තරුණ`))) {
+        return `a YouTube video script guiding Sri Lankan youth on how to start freelancing using AI tools`;
+      }
+      if (lower.includes(`cake`) && (lower.includes(`avurudu`) || lower.includes(`instagram`) || lower.includes(`butter`))) {
+        return `promotional Instagram captions for a small Sri Lankan cake shop featuring Sinhala and Tamil New Year (Avurudu) butter cake and ribbon cake offers`;
+      }
+      if (lower.includes(`ஒளிச்சேர்க்கை`) || lower.includes(`photosynthesis`) || (lower.includes(`உயிரியல்`) && lower.includes(`a/l`))) {
+        return `clear G.C.E. A/L Biology revision notes and exam practice questions explaining photosynthesis (light reaction and Calvin cycle)`;
+      }
+      if (lower.includes(`tea`) && lower.includes(`logo`)) {
+        return `a minimalist Ceylon tea brand logo concept featuring tea leaves and misty Sri Lankan hill-country mountains`;
+      }
+      if (lower.includes(`nine arch`) || lower.includes(`ella`) || lower.includes(`කෝච්චි`)) {
+        return `a cinematic aerial scene of a classic blue Sri Lankan train crossing the Nine Arch Bridge in Ella surrounded by misty tea plantations`;
+      }
+      if (lower.includes(`fastapi`) || lower.includes(`validator`)) {
+        return `a production-ready Python FastAPI endpoint that validates Sinhala, Tamil, Singlish, and Tanglish prompt payloads with rate limiting and structured JSON error responses`;
+      }
+      if (lower.includes(`linen`) || lower.includes(`clothing`)) {
+        return `promotional Instagram and WhatsApp Status captions launching a new Sri Lankan linen clothing collection`;
+      }
+      if (lower.includes(`internship`) || lower.includes(`cv`)) {
+        return `a polite internship application email and four impact-focused CV bullet points for a media arts graduate`;
+      }
+      if (lower.includes(`சுற்றுலா`) || lower.includes(`துறைத் தலைவ`)) {
+        return `a formal letter to a university Head of Department requesting permission for an academic field study trip`;
+      }
+
+      // Generic bilingual keyword extraction so any free-form Sinhala/Tamil/Singlish/Tanglish input translates meaningfully
+      const conceptMap = [
+        { re: /youtube|යූටියුබ්|யூடியூப்/i, en: `YouTube video content` },
+        { re: /script|ස්ක්‍රිප්ට්|திரைக்கதை/i, en: `structured video script` },
+        { re: /instagram|ig|ෆේස්බුක්|facebook|tiktok|whatsapp/i, en: `engaging social media copy` },
+        { re: /logo|ලෝගෝ|லோகோ|design|නිර්මාණ/i, en: `visual brand identity design` },
+        { re: /business|ව්‍යාපාර|shop|කඩේ|kadai|வியாபாரம்|brand/i, en: `Sri Lankan small business marketing` },
+        { re: /biology|විද්‍යා|உயிரியல்|chemistry|வேதியியல்|a\/l|o\/l|exam|විභාග|தேர்வு|study|පාඩම්/i, en: `exam-oriented study support` },
+        { re: /assignment|පැවරුම්|ஒப்படைப்பு|essay|රචනා|report|වාර්තා/i, en: `academic assignment guidance` },
+        { re: /research|පර්යේෂණ|ஆய்வு|solar|සූර්ය/i, en: `evidence-based research synthesis` },
+        { re: /email|ඊමේල්|மின்னஞ்சல்|letter|ලියුම|කඩදාසි|கடிதம்/i, en: `clear written communication` },
+        { re: /video|වීඩියෝ|காணொளி|drone|camera|cinematic/i, en: `cinematic video production` },
+        { re: /code|කෝඩ්|api|python|javascript|react|app/i, en: `clean software implementation` }
+      ];
+
+      const matched = [];
+      for (let i = 0; i < conceptMap.length; i++) {
+        if (conceptMap[i].re.test(t) && !matched.includes(conceptMap[i].en)) {
+          matched.push(conceptMap[i].en);
+        }
+      }
+
+      // Preserve Latin words/brands from mixed script input
+      const latinFragments = t.match(/[A-Za-z0-9][A-Za-z0-9/+._-]{1,}/g) || [];
+      const stopWords = new Set([`mata`, `ekak`, `ekata`, `hadaganna`, `ona`, `mage`, `aluth`, `kiyala`, `karanna`, `honda`, `kade`, `denna`, `puluwan`, `thiyanawa`, `saha`, `ganna`, `podi`, `enakku`, `venum`, `epdi`, `pannanum`, `nalla`, `oru`, `ku`, `la`, `the`, `and`, `for`, `with`, `this`, `that`]);
+      const cleanKeywords = latinFragments.filter(w => !stopWords.has(w.toLowerCase())).slice(0, 6);
+
+      if (matched.length > 0 || cleanKeywords.length > 0) {
+        const parts = [];
+        if (matched.length > 0) parts.push(matched.join(`, `));
+        if (cleanKeywords.length > 0) parts.push(`focusing on ` + cleanKeywords.join(` `));
+        return parts.join(` `) + (answers.soc_brand ? ` for ` + answers.soc_brand : ``);
+      }
+
+      // Fallback clean wrapper preserving original script context
+      return `a structured ${CATEGORY_LABELS[category] || `task`} based on the user's request ("${t.slice(0, 120)}")`;
+    }
+
+    function computeClarity(ideaText, category, platform, answers) {
+      const txt = (ideaText || ``).trim();
+      let score = 0;
+      const tips = [];
+
+      if (txt.length >= 45) {
+        score += 28;
+        tips.push({ label: `Core idea is detailed`, done: true });
+      } else if (txt.length >= 15) {
+        score += 18;
+        tips.push({ label: `Add 1–2 more specifics to your idea`, done: false });
+      } else {
+        score += 6;
+        tips.push({ label: `Describe what you want to create`, done: false });
+      }
+
+      const questions = CATEGORY_QUESTIONS[category] || [];
+      let answeredCount = 0;
+      for (let i = 0; i < questions.length; i++) {
+        if ((answers[questions[i].id] || ``).trim().length > 0) answeredCount++;
+      }
+
+      const qRatio = questions.length > 0 ? answeredCount / questions.length : 1;
+      score += Math.round(qRatio * 47);
+
+      if (answeredCount >= Math.max(2, questions.length - 1)) {
+        tips.push({ label: `Clarifying context complete (${answeredCount}/${questions.length})`, done: true });
+      } else {
+        const missing = questions.find(q => !(answers[q.id] || ``).trim());
+        tips.push({ label: `Answer "${missing ? missing.label : `clarifying fields`}"`, done: false });
+      }
+
+      if (platform) {
+        score += 15;
+        tips.push({ label: `Optimised for ${platform}`, done: true });
+      }
+
+      if (appState.refinement && appState.refinement !== `none`) {
+        score += 10;
+        tips.push({ label: `Refinement applied`, done: true });
+      } else {
+        score += 5;
+      }
+
+      score = Math.min(100, Math.max(10, score));
+      let status = `Needs more detail`;
+      let toneClass = `is-low`;
+      if (score >= 80) { status = `Ready for top AI results`; toneClass = `is-high`; }
+      else if (score >= 55) { status = `Good structure`; toneClass = `is-mid`; }
+
+      return { score: score, status: status, toneClass: toneClass, tips: tips };
+    }
+
+    function applyRefinementText(text, mode, platform) {
+      if (!mode || mode === `none`) return text;
+      if (mode === `shorter`) {
+        return text
+          .replace(/\n{2,}/g, `\n`)
+          .split(`\n`)
+          .filter(line => !line.startsWith(`- Check`) && line.trim().length > 0)
+          .slice(0, 6)
+          .join(`\n`) + `\n[Refinement: Keep the final response concise and under 150 words.]`;
+      }
+      if (mode === `formal`) {
+        return text + `\n\nStyle Refinement: Maintain a polished, executive, and grammatically formal British English register throughout.`;
+      }
+      if (mode === `visual`) {
+        return text + `\n\nVisual Detail Boost: Include vivid sensory descriptions, lighting cues, natural colour harmony, depth of field, and clear spatial composition.`;
+      }
+      if (mode === `creative`) {
+        return text + `\n\nCreative Boost: Open with an unexpected, memorable hook and use culturally resonant Sri Lankan storytelling imagery.`;
+      }
+      if (mode === `simplify`) {
+        return text + `\n\nLanguage Simplicity: Use plain, clear everyday English sentences (B1 level). Avoid technical jargon or complex idioms.`;
+      }
+      if (mode === `constraints`) {
+        return text + `\n\nStrict Guardrails: Do not invent statistics, facts, or URLs. State any assumptions explicitly before answering.`;
+      }
+      if (mode === `remix`) {
+        return `Alternative Angle for ${platform}:\n` + text + `\n\nRemix Direction: Reframe the response from a fresh "problem → surprising insight → practical action" perspective.`;
+      }
+      return text;
+    }
+
+    function runLocalPromptEngine(ideaText, options) {
+      const opts = options || {};
+      const category = opts.category || appState.category;
+      const platform = opts.platform || appState.platform;
+      const answers = opts.answers || appState.answers;
+      const refinement = opts.refinement || appState.refinement;
+      const detectedLang = detectInputLanguage(ideaText, opts.inputLang || appState.inputLang);
+      const intentEn = extractEnglishIntent(ideaText, category, answers);
+      const clarity = computeClarity(ideaText, category, platform, answers);
+
+      // Build 5 Universal Framework Blocks tailored by Category & Platform
+      let role = `You are an expert AI assistant`;
+      let context = `The user is based in Sri Lanka and wants ${intentEn}.`;
+      let task = `Create a complete, high-impact response for ${intentEn}.`;
+      let constraints = `Keep instructions clear, accurate, culturally relevant to Sri Lanka, and free of filler.`;
+      let format = `Present the result in clean, scannable sections with clear headings.`;
+
+      if (category === `social`) {
+        const brand = answers.soc_brand || `a Sri Lankan small business`;
+        const socPlat = answers.soc_platform || `Instagram`;
+        const audience = answers.soc_audience || `Sri Lankan followers`;
+        const goal = answers.soc_goal || `engagement and sales`;
+        const tone = answers.soc_tone || `friendly and warm`;
+        const countOpt = answers.soc_options || `3 clear options`;
+
+        role = `You are an experienced social media strategist for ${brand}, targeting ${audience} in Sri Lanka.`;
+        context = `Goal: ${goal}. Platform: ${socPlat}. User's original concept: ${intentEn}.`;
+        task = `Write ${countOpt} tailored for ${socPlat} that immediately capture attention and drive ${goal.toLowerCase()}.`;
+        constraints = `Tone: ${tone}. Use clear, relatable English. Include up to 3 relevant hashtags and a natural call to action.`;
+        format = `Number each option clearly with [Hook], [Body Copy], [CTA], and [Hashtags].`;
+      } else if (category === `video`) {
+        const shot = answers.vid_shot || `cinematic wide shot`;
+        const move = answers.vid_movement || `slow smooth forward glide`;
+        const mood = answers.vid_mood || `golden hour warm sunlight`;
+        const style = answers.vid_style || `photorealistic 4K cinema`;
+        const audio = answers.vid_audio || `natural ambient soundscape`;
+        const dur = answers.vid_duration || `10 seconds`;
+
+        role = `You are a cinematographer and AI video director crafting a precision shot specification.`;
+        context = `Scene focus: ${intentEn}. Mood and lighting: ${mood}.`;
+        task = `Generate ${shot.toLowerCase()} depicting ${intentEn} in a ${style.toLowerCase()} visual style.`;
+        constraints = `Use one clear camera movement only (${move.toLowerCase()}). Maintain strict subject and environment consistency across all frames.`;
+        format = `Camera: ${shot} | Motion: ${move} | Audio: ${audio} | Duration: ${dur}.`;
+      } else if (category === `research`) {
+        const topic = answers.res_topic || intentEn;
+        const level = answers.res_level || `University undergraduate`;
+        const purpose = answers.res_purpose || `research report`;
+        const need = answers.res_need || `structured outline and key findings`;
+        const sources = answers.res_sources || `peer-reviewed and official government sources`;
+
+        role = `You are a rigorous academic research assistant specialising in ${topic}.`;
+        context = `The user is a ${level} preparing a ${purpose} on ${topic}.`;
+        task = `Provide ${need.toLowerCase()} grounded in verifiable evidence.`;
+        constraints = `Prioritise ${sources.toLowerCase()}. Do not fabricate citations, dates, or statistics. Flag any claim that requires primary verification.`;
+        format = `Organise with numbered headings, concise bullet points, and a "Suggested Verification Sources" section.`;
+      } else if (category === `academic`) {
+        const type = answers.aca_type || `assignment`;
+        const level = answers.aca_level || `G.C.E. A/L or University`;
+        const words = answers.aca_words || `1,000 words`;
+        const help = answers.aca_help || `structured outline and concept explanation`;
+
+        role = `You are a Socratic academic tutor guiding a ${level} student.`;
+        context = `Assignment type: ${type} (~${words}). Topic: ${intentEn}.`;
+        task = `Do not write the full assignment for the student. Instead, provide ${help.toLowerCase()} to strengthen their own work.`;
+        constraints = `Maintain strict academic integrity. For every section, include one guiding research question and one recommended source type.`;
+        format = `Use a clear step-by-step study scaffold with bulleted checkpoints and self-test questions.`;
+      } else if (category === `daily`) {
+        const taskType = answers.day_task || `message or plan`;
+        const goal = answers.day_goal || intentEn;
+        const tone = answers.day_tone || `polite and clear`;
+        const len = answers.day_length || `medium length`;
+
+        role = `You are a thoughtful personal communications and productivity assistant.`;
+        context = `Task type: ${taskType}. Objective: ${goal}. Core idea: ${intentEn}.`;
+        task = `Draft a ready-to-send ${taskType.toLowerCase()} that achieves the stated goal smoothly.`;
+        constraints = `Tone: ${tone}. Length: ${len}. Keep wording natural, respectful, and immediately usable.`;
+        format = `For emails/letters include Subject + Greeting + Body + Sign-off; for plans/checklists use numbered actionable steps.`;
+      } else {
+        const genRole = answers.gen_role || `domain specialist and prompt architect`;
+        const genAud = answers.gen_audience || `Sri Lankan users`;
+        const genTone = answers.gen_tone || `clear and practical`;
+        const genFmt = answers.gen_format || `structured bullet points`;
+
+        role = `Act as a ${genRole}.`;
+        context = `Audience: ${genAud}. Requirement: ${intentEn}.`;
+        task = `Deliver a thorough, high-utility solution for ${intentEn}.`;
+        constraints = `Tone: ${genTone}. Focus on practical accuracy and zero unnecessary fluff.`;
+        format = `Output format: ${genFmt}.`;
+      }
+
+      // Platform-Specific Prompt Assembly (Basic, Detailed, Creative)
+      let basic = ``;
+      let detailed = ``;
+      let creative = ``;
+
+      if (platform === `Midjourney`) {
+        const negStr = buildNegativeString();
+        const aspect = category === `video` ? `--ar 16:9` : `--ar 1:1`;
+        basic = `${intentEn}, clean composition, natural lighting, high detail ${aspect}`;
+        detailed = `${intentEn}, ${answers.gen_tone || `modern minimalist`} aesthetic, balanced studio lighting, crisp textures, sharp focal subject, high-resolution editorial render ${aspect} ${negStr.startsWith(`--no`) ? negStr : ``}`.trim();
+        creative = `Artisanal editorial showcase of ${intentEn}, warm tropical golden-hour rim light, subtle botanical shadows, tactile natural paper and ceramic tones, Leica 50mm f/1.8 depth of field, timeless Sri Lankan craft heritage ${aspect} ${negStr.startsWith(`--no`) ? negStr : ``}`.trim();
+        constraints += ` Include Midjourney aspect ratio (${aspect}) and negative guardrails only where supported.`;
+      } else if (platform === `Video AI`) {
+        const shot = answers.vid_shot || `Cinematic wide shot`;
+        const move = answers.vid_movement || `Slow smooth forward glide`;
+        const mood = answers.vid_mood || `Misty tropical morning`;
+        const dur = answers.vid_duration || `10 seconds`;
+        const avoidNote = buildNegativeString();
+
+        basic = `${shot} of ${intentEn}. ${mood} lighting. ${move}. Duration: ${dur}.`;
+        detailed = `Create a ${shot.toLowerCase()} of ${intentEn}.\n\nLighting & Style: ${mood}, photorealistic 4K cinema grade, natural depth of field.\nCamera Rule: Use one clear camera movement only — ${move.toLowerCase()}. Maintain consistent subject appearance throughout.\nAudio: ${answers.vid_audio || `Natural ambient soundscape`}.\nDuration: ${dur}.\n${avoidNote}`;
+        creative = `Immersive atmospheric film sequence of ${intentEn}: soft golden sunbeams piercing morning mist, gentle motion parallax as the camera performs a ${move.toLowerCase()}, rich emerald and warm amber palette, poetic documentary pacing (${dur}). ${avoidNote}`;
+      } else if (platform === `Coding AI`) {
+        basic = `${role}\nWrite clean, well-documented code for ${intentEn}. Include input validation and clear error handling.`;
+        detailed = `${role}\n\nContext: ${context}\n\nTask: Implement ${intentEn}.\n\nTechnical Requirements:\n- Validate all incoming payloads and edge cases.\n- Return structured error messages (what failed, why, and how to fix).\n- Follow security best practices (never hardcode private API keys).\n- ${constraints}\n\nOutput Format: Provide modular, copy-ready code with brief inline comments and an example request/response.`;
+        creative = `${role}\nDesign an elegant, resilient architecture for ${intentEn}. First outline the data flow and security boundaries in 3 bullets, then write clean production-grade code with automated unit-test cases for Sinhala, Tamil, Singlish, and Tanglish edge inputs.`;
+      } else if (platform === `Claude`) {
+        basic = `${role} ${task} Keep it clear and structured.`;
+        detailed = `<role>\n${role}\n</role>\n\n<context>\n${context}\n</context>\n\n<instructions>\n${task}\n</instructions>\n\n<constraints>\n${constraints}\n</constraints>\n\n<output_format>\n${format}\n</output_format>`;
+        creative = `Think carefully about the Sri Lankan cultural and linguistic nuances behind "${intentEn}". ${role} Deliver an insightful, human-sounding response using vivid examples, clear section headers, and an actionable closing takeaway.`;
+      } else if (platform === `Gemini`) {
+        basic = `${role} Please help with ${intentEn}. Keep the explanation clear and easy to follow.`;
+        detailed = `${role}\n\nContext:\n${context}\n\nStep-by-Step Task:\n1. Identify the core goal of ${intentEn}.\n2. ${task}\n3. Highlight any assumptions or details to verify.\n\nConstraints:\n- ${constraints}\n\nFormat:\n${format}`;
+        creative = `${role}\nApproach ${intentEn} like a master storyteller and strategist: pair clear factual structure with fresh, memorable analogies suited to Sri Lankan readers, then finish with a quick 3-point checklist to put it into action today.`;
+      } else {
+        // ChatGPT default
+        basic = `${role} ${task} ${constraints}`;
+        detailed = `${role}\n\nContext: ${context}\n\nTask: ${task}\n\nConstraints:\n- ${constraints}\n\nFormat: ${format}`;
+        creative = `${role}\nTake a fresh, compelling angle on ${intentEn}. Open with an attention-grabbing first line, weave in authentic Sri Lankan context, and structure the output so it is effortless to read and act on immediately.\n\nFormat: ${format}`;
+      }
+
+      // Apply Refine & Remix transformation
+      basic = applyRefinementText(basic, refinement, platform);
+      detailed = applyRefinementText(detailed, refinement, platform);
+      creative = applyRefinementText(creative, refinement, platform);
+
+      // Bilingual Verification Summaries (Sinhala & Tamil)
+      const catSi = {
+        social: `සමාජ මාධ්‍ය ප්‍රචාරණය`,
+        video: `වීඩියෝ නිර්මාණය`,
+        research: `පර්යේෂණ සහ විශ්ලේෂණය`,
+        academic: `අධ්‍යයන පැවරුම`,
+        daily: `එදිනෙදා ලිපි සහ සැලසුම්`,
+        general: `විශේෂිත AI කාර්යය`
+      }[category] || `AI කාර්යය`;
+
+      const catTa = {
+        social: `சமூக ஊடகப் பதிவு`,
+        video: `காணொளி உருவாக்கம்`,
+        research: `ஆய்வு மற்றும் பகுப்பாய்வு`,
+        academic: `கல்விப் பயிற்சி`,
+        daily: `அன்றாடத் தகவல் தொடர்பு`,
+        general: `பொதுவான AI பணி`
+      }[category] || `AI பணி`;
+
+      const sinhalaSummary = `ඔබේ අදහස (${detectedLang}) නිවැරදිව හඳුනාගෙන "${platform}" සඳහා "${catSi}" රාමුව යටතේ ප්‍රශස්ත ඉංග්‍රීසි prompt 3ක් සකසා ඇත. මෙහි AI භූමිකාව, පසුබිම, නිශ්චිත කාර්යය, නීති සහ ප්‍රතිදාන ආකෘතිය ඇතුළත් වන නිසා සරල පරිවර්තනයකට වඩා නිවැරදි ප්‍රතිඵල ලැබේ.`;
+      const tamilSummary = `உங்கள் கருத்து (${detectedLang}) சரியாகப் புரிந்துகொள்ளப்பட்டு, "${platform}" தளத்திற்காக "${catTa}" பிரிவில் 3 மேம்படுத்தப்பட்ட ஆங்கில prompts உருவாக்கப்பட்டுள்ளன. இதில் AI பங்கு, சூழல், தெளிவான பணி, விதிகள் மற்றும் வெளியீட்டு வடிவம் உள்ளதால் நேரடி மொழிபெயர்ப்பை விட சிறந்த முடிவுகள் கிடைக்கும்.`;
+
+      const whyWorks = `Why this works for ${platform}: Instead of literal translation, PromptWay maps your ${detectedLang} intention into the 5-Block Universal Framework (Role, Context, Task, Constraints, Format) and applies ${platform}-specific conventions${platform === `Midjourney` ? ` (aspect ratio and visual avoid tags)` : platform === `Video AI` ? ` (single-camera-movement stability and audio/duration cues)` : platform === `Claude` ? ` (structured XML delimiters)` : ``}.`;
+
+      return {
+        detectedLang: detectedLang,
+        clarityScore: clarity.score,
+        clarityStatus: clarity.status,
+        clarityTone: clarity.toneClass,
+        tips: clarity.tips,
+        blocks: { role: role, context: context, task: task, constraints: constraints, format: format },
+        basic: basic,
+        detailed: detailed,
+        creative: creative,
+        sinhalaSummary: sinhalaSummary,
+        tamilSummary: tamilSummary,
+        whyWorks: whyWorks
+      };
+    }
+
+    // =========================================================================
+    // 5. CORE UPDATE & RENDERING FUNCTIONS
+    // =========================================================================
+    async function updatePromptsAndView(requestAI) {
+      if (requestAI && groqActionBlocked()) return null;
+      syncIdeaContext();
+      const version = ++generationVersion;
+      const options = {
+        inputLang: appState.inputLang, category: appState.category,
+        platform: appState.platform, answers: relevantAnswers(appState.answers, appState.category),
+        refinement: appState.refinement
+      };
+      const contextKey = JSON.stringify({ ideaText: appState.ideaText, ...options });
+      if (!appState.ideaText.trim() || (appState.engineMode !== `local` && !requestAI)) {
+        if (!appState.ideaText.trim() || currentGenerated.contextKey !== contextKey) currentGenerated = emptyGeneration();
+        renderBuilderOutputs();
+        return null;
+      }
+      const useGroq = appState.engineMode !== `local` && requestAI;
+      if (useGroq || currentGenerated.contextKey !== contextKey) { currentGenerated = emptyGeneration(); renderBuilderOutputs(); }
+      if (useGroq) {
+        generationPending = true;
+        refreshGenerationControls();
+        showNotice(`Generating with Groq?`, `positive`);
+      }
+      try {
+        const result = useGroq
+          ? await fetchGroqPrompts(appState.ideaText, options)
+          : Object.assign({ source: `local-engine` }, runLocalPromptEngine(appState.ideaText, options));
+        if (version !== generationVersion) return null;
+        result.contextKey = contextKey;
+        currentGenerated = result;
+        renderBuilderOutputs();
+        if (useGroq && Date.now() >= groqCooldownUntil) showNotice(`Groq AI prompts generated successfully.`, `positive`);
+        return result;
+      } catch (err) {
+        if (version === generationVersion && Date.now() >= groqCooldownUntil) showNotice(err.name === `TimeoutError` ? `Groq request timed out.` : err.message || `Groq connection failed.`, `warn`);
+        return null;
+      } finally {
+        if (useGroq) {
+          generationPending = false;
+          refreshGenerationControls();
+        }
+      }
+    }
+
+    function renderBuilderOutputs() {
+      const res = currentGenerated;
+
+      const charCountEl = document.getElementById(`idea-char-count`);
+      if (charCountEl) charCountEl.textContent = `${(appState.ideaText || ``).length} chars`;
+
+      const detPill = document.getElementById(`detected-lang-pill`);
+      if (detPill) detPill.textContent = `Detected: ${res.detectedLang}`;
+
+      const catBadge = document.getElementById(`active-cat-badge`);
+      if (catBadge) catBadge.textContent = CATEGORY_LABELS[appState.category] || `General`;
+
+      const platBadge = document.getElementById(`results-platform-badge`);
+      if (platBadge) platBadge.textContent = appState.platform;
+
+      const subEl = document.getElementById(`results-subtitle`);
+      if (subEl && res.source === `none`) subEl.textContent = appState.ideaText.trim() ? `Click Generate Prompts for the current idea.` : `Enter an idea to begin.`;
+      else if (subEl) subEl.textContent = `${res.source === `groq` ? `Groq AI ? ${res.model}` : `Local Engine (Offline)`} ? Tailored for ${appState.platform} using the 5-Block Universal Framework.`;
+
+      const hintEl = document.getElementById(`open-ai-hint`);
+      if (hintEl) hintEl.textContent = `Copy and paste into ${appState.platform}`;
+
+      // Clarity Score Meter
+      const scoreVal = document.getElementById(`clarity-score-value`);
+      const statusLbl = document.getElementById(`clarity-status-label`);
+      const barFill = document.getElementById(`clarity-fill`);
+      const barWrap = document.getElementById(`clarity-progressbar`);
+      const tipsEl = document.getElementById(`clarity-tips`);
+
+      if (scoreVal) scoreVal.textContent = `${res.clarityScore}%`;
+      if (statusLbl) statusLbl.textContent = res.clarityStatus || `Good structure`;
+      if (barFill) {
+        barFill.style.width = `${res.clarityScore}%`;
+        barFill.className = `clarity-fill ${res.clarityTone || `is-mid`}`;
+      }
+      if (barWrap) barWrap.setAttribute(`aria-valuenow`, String(res.clarityScore));
+      if (tipsEl) {
+        tipsEl.innerHTML = (res.tips || []).map(t =>
+          `<span class="tip-badge ${t.done ? `is-done` : ``}">${t.done ? `✓` : `+`} ${escapeHtml(t.label)}</span>`
+        ).join(``);
+      }
+
+      // 5-Block Framework Preview
+      inspectFrameworkBlock(appState.selectedFrameworkBlock || `role`, true);
+
+      // Variation Cards
+      renderVariationCards(res);
+
+      // Conditional Negative Prompt Box
+      renderNegativePromptTile();
+
+      // Bilingual Verification & Why This Works
+      const siEl = document.getElementById(`verify-sinhala-text`);
+      const taEl = document.getElementById(`verify-tamil-text`);
+      const whyEl = document.getElementById(`why-works-text`);
+      if (siEl) siEl.textContent = res.sinhalaSummary;
+      if (taEl) taEl.textContent = res.tamilSummary;
+      if (whyEl) whyEl.textContent = res.whyWorks;
+
+      if (window.lucide && typeof window.lucide.createIcons === `function`) {
+        window.lucide.createIcons();
+      }
+    }
+
+    function renderVariationCards(res) {
+      const container = document.getElementById(`prompt-variations-container`);
+      if (!container) return;
+
+      const allVars = [
+        { key: `basic`, label: `Basic · Direct & Fast`, badgeClass: `basic`, text: res.basic },
+        { key: `detailed`, label: `Detailed · Full 5-Block Structure`, badgeClass: `detailed`, text: res.detailed },
+        { key: `creative`, label: `Creative · Elevated Angle`, badgeClass: `creative`, text: res.creative }
+      ];
+
+      const visibleVars = appState.variationFilter === `all`
+        ? allVars
+        : allVars.filter(v => v.key === appState.variationFilter);
+
+      container.innerHTML = visibleVars.map(v => {
+        const wordCount = v.text.trim() ? v.text.trim().split(/\s+/).length : 0;
+        const isBookmarked = appState.savedPrompts.some(s => s.promptText === v.text);
+        return `
+          <article class="prompt-card">
+            <div class="prompt-card-top">
+              <span class="var-badge ${v.badgeClass}">${escapeHtml(v.label)}</span>
+              <span class="prompt-meta">${wordCount} words · ${v.text.length} chars</span>
+            </div>
+            <pre class="prompt-output">${escapeHtml(v.text)}</pre>
+            <div class="prompt-actions">
+              <button type="button" class="mini-btn" id="copy-btn-${v.key}" onclick="copyVariation('${v.key}', this)">
+                <i data-lucide="copy" aria-hidden="true"></i>
+                <span>Copy prompt</span>
+              </button>
+              <button type="button" class="mini-btn ${isBookmarked ? `is-active` : ``}" onclick="toggleBookmark('${v.key}')">
+                <i data-lucide="bookmark" aria-hidden="true"></i>
+                <span>${isBookmarked ? `Saved` : `Bookmark`}</span>
+              </button>
+              <button type="button" class="mini-btn" onclick="exportSinglePrompt('${v.key}', 'txt')">
+                <i data-lucide="file-text" aria-hidden="true"></i>
+                <span>.txt</span>
+              </button>
+              <button type="button" class="mini-btn" onclick="exportSinglePrompt('${v.key}', 'md')">
+                <i data-lucide="file-code" aria-hidden="true"></i>
+                <span>.md</span>
+              </button>
+              <button type="button" class="mini-btn" onclick="copyShareSummary('${v.key}', this)">
+                <i data-lucide="share-2" aria-hidden="true"></i>
+                <span>Share text</span>
+              </button>
+            </div>
+          </article>
+        `;
+      }).join(``);
+    }
+
+    function renderSmartQuestions() {
+      const container = document.getElementById(`smart-questions-container`);
+      if (!container) return;
+      const questions = CATEGORY_QUESTIONS[appState.category] || [];
+      container.innerHTML = questions.map(q => {
+        const currentVal = appState.answers[q.id] || ``;
+        if (q.type === `select`) {
+          const opts = [`<option value="">Choose...</option>`].concat(
+            q.options.map(opt => `<option value="${escapeHtml(opt)}" ${currentVal === opt ? `selected` : ``}>${escapeHtml(opt)}</option>`)
+          ).join(``);
+          return `
+            <div class="field-group">
+              <label class="field-label" for="q-${q.id}">${escapeHtml(q.label)}</label>
+              <select class="select-control" id="q-${q.id}" onchange="updateSmartAnswer('${q.id}', this.value)">${opts}</select>
+            </div>
+          `;
+        }
+        return `
+          <div class="field-group">
+            <label class="field-label" for="q-${q.id}">${escapeHtml(q.label)}</label>
+            <input type="text" class="input-control" id="q-${q.id}" value="${escapeHtml(currentVal)}" placeholder="${escapeHtml(q.placeholder || ``)}" oninput="updateSmartAnswer('${q.id}', this.value)">
+          </div>
+        `;
+      }).join(``);
+    }
+
+    function renderNegativePromptTile() {
+      const tile = document.getElementById(`negative-prompt-tile`);
+      if (!tile) return;
+      const showNeg = appState.platform === `Midjourney` || appState.platform === `Video AI`;
+      tile.classList.toggle(`is-visible`, showNeg);
+      if (!showNeg) return;
+
+      const chipsEl = document.getElementById(`negative-chips`);
+      if (chipsEl) {
+        const defaultsHtml = DEFAULT_NEGATIVE_TAGS.map(tag => {
+          const active = appState.negativeEnabled.includes(tag.id);
+          return `<button type="button" class="choice-chip ${active ? `is-active` : ``}" onclick="toggleNegativeTag('${tag.id}')">${active ? `✓ ` : ``}${escapeHtml(tag.label)}</button>`;
+        }).join(``);
+
+        const customHtml = appState.customNegatives.map((item, idx) =>
+          `<button type="button" class="choice-chip is-active" onclick="removeCustomNegative(${idx})">✓ ${escapeHtml(item)} ×</button>`
+        ).join(``);
+
+        chipsEl.innerHTML = defaultsHtml + customHtml;
+      }
+
+      const previewEl = document.getElementById(`negative-output-preview`);
+      if (previewEl) previewEl.textContent = buildNegativeString();
+    }
+
+    function buildNegativeString() {
+      const selectedLabels = DEFAULT_NEGATIVE_TAGS
+        .filter(t => appState.negativeEnabled.includes(t.id))
+        .map(t => t.label.toLowerCase());
+      const combined = selectedLabels.concat(appState.customNegatives);
+      if (combined.length === 0) return `No negative constraints selected.`;
+      if (appState.platform === `Midjourney`) {
+        return `--no ${combined.join(`, `)}`;
+      }
+      return `Avoid: ${combined.join(`, `)}.`;
+    }
+
+    function renderEngineBadge() {
+      const btn = document.getElementById(`engine-toggle-btn`);
+      const txt = document.getElementById(`engine-badge-text`);
+      if (!btn || !txt) return;
+      if (appState.engineMode !== `local`) {
+        btn.classList.add(`is-gemini`);
+        txt.textContent = `Engine: Groq AI (Online)`;
+      } else {
+        btn.classList.remove(`is-gemini`);
+        txt.textContent = `Engine: Local Engine (Offline)`;
+      }
+    }
+
+    function renderTemplates() {
+      const grid = document.getElementById(`templates-grid`);
+      if (!grid) return;
+      const searchEl = document.getElementById(`template-search`);
+      const q = (searchEl ? searchEl.value : ``).trim().toLowerCase();
+
+      const filtered = TEMPLATES.filter(t => {
+        const matchFilter = appState.templateFilter === `all` || t.filterCat === appState.templateFilter;
+        const matchQuery = !q ||
+          t.title.toLowerCase().includes(q) ||
+          t.idea.toLowerCase().includes(q) ||
+          t.tag.toLowerCase().includes(q) ||
+          t.platform.toLowerCase().includes(q);
+        return matchFilter && matchQuery;
+      });
+
+      if (filtered.length === 0) {
+        grid.innerHTML = `
+          <div class="empty-state">
+            <strong>No templates match "${escapeHtml(q)}"</strong>
+            <p>Try clearing your search or choosing another category filter.</p>
+          </div>
+        `;
+        return;
+      }
+
+      grid.innerHTML = filtered.map(t => `
+        <article class="catalog-card">
+          <div class="catalog-card-body">
+            <div class="card-badges">
+              <span class="pill-tag">${escapeHtml(t.platform)}</span>
+              <span class="pill-tag neutral">${escapeHtml(t.tag)}</span>
+              <span class="pill-tag neutral">${escapeHtml(t.lang)}</span>
+            </div>
+            <h3 class="tile-title">${escapeHtml(t.title)}</h3>
+            <p class="tile-subtitle">${escapeHtml(t.idea)}</p>
+          </div>
+          <div class="action-bar">
+            <button type="button" class="btn-primary" onclick="useTemplate('${t.id}')">Use template</button>
+          </div>
+        </article>
+      `).join(``);
+    }
+
+    function renderSaved() {
+      const container = document.getElementById(`saved-container`);
+      if (!container) return;
+
+      const searchEl = document.getElementById(`saved-search`);
+      const folderEl = document.getElementById(`saved-folder-filter`);
+      const q = (searchEl ? searchEl.value : ``).trim().toLowerCase();
+      const folder = folderEl ? folderEl.value : `all`;
+
+      const filtered = appState.savedPrompts.filter(item => {
+        const matchFolder = folder === `all` || item.folder === folder;
+        const matchQuery = !q ||
+          item.promptText.toLowerCase().includes(q) ||
+          item.ideaText.toLowerCase().includes(q) ||
+          item.platform.toLowerCase().includes(q);
+        return matchFolder && matchQuery;
+      });
+
+      if (appState.savedPrompts.length === 0) {
+        container.innerHTML = `
+          <div class="empty-state">
+            <strong>No saved prompts yet</strong>
+            <p>Bookmark any Basic, Detailed, or Creative prompt card in the Prompt Builder to keep your favourites organised here.</p>
+            <button type="button" class="btn-primary" onclick="switchView('builder')">Open Prompt Builder</button>
+          </div>
+        `;
+        return;
+      }
+
+      if (filtered.length === 0) {
+        container.innerHTML = `
+          <div class="empty-state">
+            <strong>No matching saved prompts</strong>
+            <p>Adjust your search term or folder filter to view your saved prompts.</p>
+          </div>
+        `;
+        return;
+      }
+
+      const folderOptions = [`Social Media`, `Academic`, `Video & Image`, `Coding`, `Daily Life`, `General`];
+      container.innerHTML = `<div class="card-grid">` + filtered.map(item => `
+        <article class="catalog-card">
+          <div class="catalog-card-body">
+            <div class="card-badges">
+              <span class="pill-tag">${escapeHtml(item.platform)}</span>
+              <span class="pill-tag neutral">${escapeHtml(item.variation)}</span>
+              <span class="pill-tag neutral">${escapeHtml(item.folder)}</span>
+            </div>
+            <p class="card-idea-line"><strong>Idea:</strong> ${escapeHtml(item.ideaText.slice(0, 90))}${item.ideaText.length > 90 ? `…` : ``}</p>
+            <pre class="prompt-output prompt-output-compact">${escapeHtml(item.promptText)}</pre>
+          </div>
+          <div class="prompt-actions">
+            <button type="button" class="mini-btn" onclick="copySavedPrompt('${item.id}', this)">Copy</button>
+            <button type="button" class="mini-btn" onclick="reuseSavedPrompt('${item.id}')">Reuse in Builder</button>
+            <select class="select-control compact-select" aria-label="Change folder" onchange="changeSavedFolder('${item.id}', this.value)">
+              ${folderOptions.map(f => `<option value="${f}" ${item.folder === f ? `selected` : ``}>${escapeHtml(f)}</option>`).join(``)}
+            </select>
+            <button type="button" class="mini-btn is-danger" onclick="deleteSavedPrompt('${item.id}')">Delete</button>
+          </div>
+        </article>
+      `).join(``) + `</div>`;
+    }
+
+    function renderHistory() {
+      const container = document.getElementById(`history-container`);
+      if (!container) return;
+
+      const qEl = document.getElementById(`history-search`);
+      const q = (qEl ? qEl.value : ``).trim().toLowerCase();
+
+      const filtered = appState.historyLog.filter(h =>
+        !q ||
+        h.ideaText.toLowerCase().includes(q) ||
+        h.platform.toLowerCase().includes(q) ||
+        h.detectedLang.toLowerCase().includes(q)
+      );
+
+      if (appState.historyLog.length === 0) {
+        container.innerHTML = `
+          <div class="empty-state">
+            <strong>No generation history yet</strong>
+            <p>Click "Generate Prompts" in the Prompt Builder to record your prompt generations here for quick reuse.</p>
+            <button type="button" class="btn-primary" onclick="switchView('builder')">Create your first prompt</button>
+          </div>
+        `;
+        return;
+      }
+
+      if (filtered.length === 0) {
+        container.innerHTML = `
+          <div class="empty-state">
+            <strong>No history entries match "${escapeHtml(q)}"</strong>
+            <p>Try a different keyword.</p>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = `<div class="variation-stack">` + filtered.map(h => `
+        <article class="tile">
+          <div class="tile-header">
+            <div class="card-badges">
+              <span class="pill-tag">${escapeHtml(h.platform)}</span>
+              <span class="pill-tag neutral">${escapeHtml(CATEGORY_LABELS[h.category] || h.category)}</span>
+              <span class="pill-tag neutral">${escapeHtml(h.detectedLang)}</span>
+              <span class="prompt-meta">${escapeHtml(h.timestamp)}</span>
+            </div>
+            <div class="prompt-actions">
+              <button type="button" class="mini-btn" onclick="copyHistoryPrompt('${h.id}', this)">Copy Detailed</button>
+              <button type="button" class="mini-btn is-active" onclick="reopenHistory('${h.id}')">Reopen</button>
+              <button type="button" class="mini-btn is-danger" onclick="deleteHistoryItem('${h.id}')">Delete</button>
+            </div>
+          </div>
+          <p class="card-idea-line"><strong>Input:</strong> ${escapeHtml(h.ideaText)}</p>
+          <pre class="prompt-output">${escapeHtml(h.detailedPrompt)}</pre>
+        </article>
+      `).join(``) + `</div>`;
+    }
+
+    function renderDrafts() {
+      const listEl = document.getElementById(`drafts-list`);
+      const countEl = document.getElementById(`count-drafts`);
+      if (countEl) countEl.textContent = String(appState.drafts.length);
+      if (!listEl) return;
+
+      if (appState.drafts.length === 0) {
+        listEl.innerHTML = `<p class="tile-subtitle">No offline drafts saved yet. Click "Save draft" to store unfinished ideas locally.</p>`;
+        return;
+      }
+      listEl.innerHTML = appState.drafts.map(d => `
+        <div class="draft-row">
+          <div>
+            <div class="draft-title">${escapeHtml(d.ideaText)}</div>
+            <div class="prompt-meta">${escapeHtml(d.platform)} · ${escapeHtml(d.savedAt)}</div>
+          </div>
+          <div class="action-group">
+            <button type="button" class="mini-btn" onclick="loadDraft('${d.id}')">Load</button>
+            <button type="button" class="mini-btn is-danger" onclick="deleteDraft('${d.id}')">Delete</button>
+          </div>
+        </div>
+      `).join(``);
+    }
+
+    function renderResearchComparison() {
+      const body = document.getElementById(`research-comparison-body`);
+      if (!body) return;
+      const c = RESEARCH_CASES[appState.researchCaseIdx] || RESEARCH_CASES[0];
+
+      for (let i = 0; i < 3; i++) {
+        const btn = document.getElementById(`cmp-btn-${i}`);
+        if (btn) btn.classList.toggle(`is-active`, i === appState.researchCaseIdx);
+      }
+
+      body.innerHTML = `
+        <div class="lang-verify-card">
+          <span class="pill-tag neutral">Method A · Direct Translation</span>
+          <h4 class="tile-title">${escapeHtml(c.title)}</h4>
+          <p class="tile-subtitle"><strong>User Input:</strong> ${escapeHtml(c.input)}</p>
+          <pre class="prompt-output">${escapeHtml(c.methodA)}</pre>
+          <p class="flaw-note"><strong>Limitation:</strong> ${escapeHtml(c.methodAFlaws)}</p>
+        </div>
+        <div class="lang-verify-card">
+          <span class="pill-tag">Method B · PromptWay Optimisation</span>
+          <h4 class="tile-title">5-Block Intent-Aware Structure</h4>
+          <p class="lang-verify-body">${escapeHtml(c.methodB)}</p>
+          <div class="metric-list">
+            ${c.metrics.map(m => `
+              <div class="metric-row">
+                <div class="metric-row-head">
+                  <span>${escapeHtml(m.name)}</span>
+                  <span class="prompt-meta">Direct: ${escapeHtml(m.a)} → <span class="metric-strong">PromptWay: ${escapeHtml(m.b)}</span></span>
+                </div>
+                <div class="metric-bars" aria-hidden="true">
+                  <div class="metric-bar-track"><div class="metric-bar-a" style="width: ${m.aNum}%;"></div></div>
+                  <div class="metric-bar-track"><div class="metric-bar-b" style="width: ${m.bNum}%;"></div></div>
+                </div>
+              </div>
+            `).join(``)}
+          </div>
+        </div>
+      `;
+    }
+
+    function renderRoadmapChecklist() {
+      const container = document.getElementById(`roadmap-checklist`);
+      const pill = document.getElementById(`checklist-progress-pill`);
+      if (!container) return;
+
+      if (pill) pill.textContent = `${appState.checklistDone.length} / ${ROADMAP_CHECKLIST.length} completed`;
+
+      container.innerHTML = ROADMAP_CHECKLIST.map(item => {
+        const checked = appState.checklistDone.includes(item.id);
+        return `
+          <label class="check-item">
+            <input type="checkbox" ${checked ? `checked` : ``} onchange="toggleChecklistItem(${item.id})">
+            <span class="check-text ${checked ? `is-done` : ``}">${escapeHtml(item.text)}</span>
+          </label>
+        `;
+      }).join(``);
+    }
+
+    function updateBadges() {
+      const sCount = document.getElementById(`count-saved`);
+      const hCount = document.getElementById(`count-history`);
+      const sStat = document.getElementById(`stat-saved`);
+      const hStat = document.getElementById(`stat-history`);
+      const dStat = document.getElementById(`stat-drafts`);
+      if (sCount) sCount.textContent = String(appState.savedPrompts.length);
+      if (hCount) hCount.textContent = String(appState.historyLog.length);
+      if (sStat) sStat.textContent = String(appState.savedPrompts.length);
+      if (hStat) hStat.textContent = String(appState.historyLog.length);
+      if (dStat) dStat.textContent = String(appState.drafts.length);
+    }
+
+    function renderAll() {
+      applyTheme(appState.theme, true);
+      applyFontSize(appState.fontSize, true);
+      applyInterfaceText();
+      renderEngineBadge();
+      renderSmartQuestions();
+      updatePromptsAndView();
+      renderDrafts();
+      renderTemplates();
+      renderSaved();
+      renderHistory();
+      renderResearchComparison();
+      renderRoadmapChecklist();
+      updateBadges();
+      syncSettingsControls();
+      if (window.lucide && typeof window.lucide.createIcons === `function`) {
+        window.lucide.createIcons();
+      }
+    }
+
+    // =========================================================================
+    // 6. USER INTERACTION HANDLERS (ALL HOISTED FUNCTIONS)
+    // =========================================================================
+    function switchView(viewId) {
+      appState.activeView = viewId;
+      const views = [`builder`, `templates`, `saved`, `history`, `settings`];
+      for (let i = 0; i < views.length; i++) {
+        const v = views[i];
+        const panel = document.getElementById(`view-${v}`);
+        const nav = document.getElementById(`nav-${v}`);
+        if (panel) panel.classList.toggle(`is-active`, v === viewId);
+        if (nav) nav.classList.toggle(`is-active`, v === viewId);
+      }
+      persistState();
+    }
+
+    function setInterfaceLanguage(lang) {
+      appState.uiLang = lang;
+      applyInterfaceText();
+      syncSettingsControls();
+      persistState();
+    }
+
+    function applyInterfaceText() {
+      const dict = I18N[appState.uiLang] || I18N.en;
+      document.documentElement.lang = appState.uiLang === `si` ? `si` : appState.uiLang === `ta` ? `ta` : `en-GB`;
+
+      const taglineEl = document.getElementById(`ui-tagline`);
+      if (taglineEl) taglineEl.textContent = dict.tagline;
+
+      const ideaBox = document.getElementById(`idea-textarea`);
+      if (ideaBox) ideaBox.placeholder = dict.placeholder_idea;
+
+      const nodes = document.querySelectorAll(`[data-i18n]`);
+      for (let i = 0; i < nodes.length; i++) {
+        const key = nodes[i].getAttribute(`data-i18n`);
+        if (key && dict[key]) nodes[i].textContent = dict[key];
+      }
+
+      const langBtns = [`en`, `si`, `ta`];
+      for (let i = 0; i < langBtns.length; i++) {
+        const b = document.getElementById(`lang-btn-${langBtns[i]}`);
+        if (b) b.classList.toggle(`is-active`, langBtns[i] === appState.uiLang);
+      }
+    }
+
+    function toggleTheme() {
+      applyTheme(appState.theme === `light` ? `dark` : `light`);
+    }
+
+    function applyTheme(mode, skipPersist) {
+      appState.theme = mode === `dark` ? `dark` : `light`;
+      document.documentElement.setAttribute(`data-theme`, appState.theme);
+      const label = document.getElementById(`theme-label`);
+      const icon = document.getElementById(`theme-icon`);
+      if (label) label.textContent = appState.theme === `dark` ? `Dark` : `Light`;
+      if (icon) icon.setAttribute(`data-lucide`, appState.theme === `dark` ? `moon` : `sun`);
+      const sel = document.getElementById(`set-theme`);
+      if (sel) sel.value = appState.theme;
+      if (window.lucide && typeof window.lucide.createIcons === `function`) {
+        window.lucide.createIcons();
+      }
+      if (!skipPersist) persistState();
+    }
+
+    function applyFontSize(size, skipPersist) {
+      appState.fontSize = [`small`, `medium`, `large`].includes(size) ? size : `medium`;
+      document.documentElement.setAttribute(`data-font-size`, appState.fontSize);
+      const sel = document.getElementById(`set-font-size`);
+      if (sel) sel.value = appState.fontSize;
+      if (!skipPersist) persistState();
+    }
+
+    function toggleEngineMode() {
+      appState.engineMode = appState.engineMode === `local` ? `groq` : `local`;
+      renderEngineBadge();
+      refreshGenerationControls();
+      updatePromptsAndView();
+      showNotice(
+        appState.engineMode !== `local`
+          ? `Switched to Gemini 1.5 Flash Hook via fetchGeminiPrompts() — using Local Engine fallback while offline.`
+          : `Switched to Offline Local Engine — instant 5-block deterministic prompt assembly with zero API cost.`,
+        `positive`
+      );
+      persistState();
+    }
+
+    function onInputConfigChange() {
+      const sel = document.getElementById(`input-lang-select`);
+      if (sel) appState.inputLang = sel.value;
+      updatePromptsAndView();
+      persistState();
+    }
+
+    function onCategoryChange() {
+      const sel = document.getElementById(`category-select`);
+      if (sel) appState.category = sel.value;
+      appState.answers = relevantAnswers(appState.answers, appState.category);
+      if (appState.inputContext) appState.inputContext.categoryFromPreset = false;
+      renderSmartQuestions();
+      updatePromptsAndView();
+      persistState();
+    }
+
+    function selectPlatform(platform) {
+      appState.platform = platform;
+      const chips = document.querySelectorAll(`#platform-chips .choice-chip`);
+      for (let i = 0; i < chips.length; i++) {
+        chips[i].classList.toggle(`is-active`, chips[i].getAttribute(`data-platform`) === platform);
+      }
+      updatePromptsAndView();
+      persistState();
+    }
+
+    function loadSample(idx) {
+      const sample = SAMPLE_IDEAS[idx];
+      if (!sample) return;
+      appState.inputLang = sample.lang;
+      appState.category = sample.category;
+      appState.platform = sample.platform;
+      appState.ideaText = sample.text;
+      appState.answers = Object.assign({}, sample.answers);
+      markLoadedContext();
+
+      const langSel = document.getElementById(`input-lang-select`);
+      const catSel = document.getElementById(`category-select`);
+      const ideaEl = document.getElementById(`idea-textarea`);
+      if (langSel) langSel.value = appState.inputLang;
+      if (catSel) catSel.value = appState.category;
+      if (ideaEl) ideaEl.value = appState.ideaText;
+
+      selectPlatform(appState.platform);
+      renderSmartQuestions();
+      updatePromptsAndView();
+      showNotice(`Loaded sample idea (${sample.lang}) for ${sample.platform}.`, `positive`);
+      persistState();
+    }
+
+    function onIdeaTyping() {
+      const el = document.getElementById(`idea-textarea`);
+      if (el) appState.ideaText = el.value;
+      updatePromptsAndView();
+      persistState();
+    }
+
+    function clearIdeaInput() {
+      appState.ideaText = ``;
+      appState.answers = {};
+      appState.category = `general`;
+      appState.inputLang = `auto`;
+      appState.refinement = `none`;
+      appState.inputContext = { text: ``, inherited: [], categoryFromPreset: false };
+      const category = document.getElementById(`category-select`);
+      const language = document.getElementById(`input-lang-select`);
+      if (category) category.value = `general`;
+      if (language) language.value = `auto`;
+      document.querySelectorAll(`#refine-buttons .mini-btn`).forEach(button => button.classList.toggle(`is-active`, button.getAttribute(`data-refine`) === `none`));
+      renderSmartQuestions();
+      const el = document.getElementById(`idea-textarea`);
+      if (el) {
+        el.value = ``;
+        el.focus();
+      }
+      updatePromptsAndView();
+      persistState();
+    }
+
+    function updateSmartAnswer(id, val) {
+      appState.answers[id] = val;
+      if (appState.inputContext) appState.inputContext.inherited = (appState.inputContext.inherited || []).filter(key => key !== id);
+      updatePromptsAndView();
+      persistState();
+    }
+
+    function inspectFrameworkBlock(blockKey, silent) {
+      appState.selectedFrameworkBlock = blockKey;
+      const pills = document.querySelectorAll(`#framework-strip .fw-pill`);
+      for (let i = 0; i < pills.length; i++) {
+        pills[i].classList.toggle(`is-selected`, pills[i].getAttribute(`data-block`) === blockKey);
+      }
+      const box = document.getElementById(`framework-preview-box`);
+      if (box) {
+        const labels = {
+          role: `1. ROLE`,
+          context: `2. CONTEXT`,
+          task: `3. TASK`,
+          constraints: `4. RULES`,
+          format: `5. FORMAT`
+        };
+        box.textContent = `${labels[blockKey] || `BLOCK`}: ${currentGenerated.blocks[blockKey] || ``}`;
+      }
+      if (!silent) persistState();
+    }
+
+    function applyRefinement(mode) {
+      if (groqActionBlocked()) return;
+      appState.refinement = mode;
+      const btns = document.querySelectorAll(`#refine-buttons .mini-btn`);
+      for (let i = 0; i < btns.length; i++) {
+        btns[i].classList.toggle(`is-active`, btns[i].getAttribute(`data-refine`) === mode);
+      }
+      updatePromptsAndView(true);
+      persistState();
+    }
+
+    function setVariationFilter(filterKey) {
+      appState.variationFilter = filterKey;
+      const keys = [`all`, `basic`, `detailed`, `creative`];
+      for (let i = 0; i < keys.length; i++) {
+        const btn = document.getElementById(`var-filter-${keys[i]}`);
+        if (btn) btn.classList.toggle(`is-active`, keys[i] === filterKey);
+      }
+      renderVariationCards(currentGenerated);
+      if (window.lucide && typeof window.lucide.createIcons === `function`) {
+        window.lucide.createIcons();
+      }
+      persistState();
+    }
+
+    async function generatePrompts(recordHistory) {
+      if (groqActionBlocked()) return;
+      const el = document.getElementById(`idea-textarea`);
+      if (el) appState.ideaText = el.value;
+      if (!appState.ideaText.trim()) {
+        showNotice(`Please enter an idea in Sinhala, Tamil, Singlish, Tanglish, or English first.`, `warn`);
+        return;
+      }
+      const result = await updatePromptsAndView(true);
+      if (!result) return;
+      if (recordHistory) {
+        const entry = {
+          id: `hist-${Date.now()}`,
+          timestamp: new Date().toLocaleString(`en-GB`, { dateStyle: `medium`, timeStyle: `short` }),
+          ideaText: appState.ideaText.trim(),
+          detectedLang: currentGenerated.detectedLang,
+          platform: appState.platform,
+          category: appState.category,
+          answers: Object.assign({}, appState.answers),
+          detailedPrompt: currentGenerated.detailed
+        };
+        appState.historyLog.unshift(entry);
+        if (appState.historyLog.length > 40) appState.historyLog = appState.historyLog.slice(0, 40);
+        updateBadges();
+        renderHistory();
+        showNotice(`${result.source === `groq` ? `Groq AI` : `Local Engine (Offline)`}: Generated Basic, Detailed & Creative prompts for ${appState.platform} and saved to History.`, `positive`);
+        persistState();
+        refreshGenerationControls();
+      }
+    }
+
+    function toggleVoiceInput() {
+      const voiceBtn = document.getElementById(`voice-btn`);
+      const voiceLabel = document.getElementById(`voice-btn-label`);
+      const voiceNotice = document.getElementById(`voice-notice`);
+      const voiceNoticeTxt = document.getElementById(`voice-notice-text`);
+
+      const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
+      if (!SpeechRec) {
+        if (voiceNotice && voiceNoticeTxt) {
+          voiceNotice.className = `inline-notice is-visible is-warn`;
+          voiceNoticeTxt.textContent = `Browser speech recognition is unavailable in this preview context. Please type your idea or load a Quick Sample Idea above.`;
+        }
+        return;
+      }
+
+      if (isRecording && recognitionInstance) {
+        recognitionInstance.stop();
+        isRecording = false;
+        if (voiceBtn) voiceBtn.classList.remove(`is-recording`);
+        if (voiceLabel) voiceLabel.textContent = (I18N[appState.uiLang] || I18N.en).btn_voice;
+        return;
+      }
+
+      try {
+        recognitionInstance = new SpeechRec();
+        const langMap = { sinhala: `si-LK`, tamil: `ta-LK`, english: `en-GB`, singlish: `en-GB`, tanglish: `en-GB`, auto: `si-LK` };
+        recognitionInstance.lang = langMap[appState.inputLang] || `en-GB`;
+        recognitionInstance.interimResults = false;
+        recognitionInstance.maxAlternatives = 1;
+
+        recognitionInstance.onresult = function (event) {
+          const transcript = event.results && event.results[0] && event.results[0][0] ? event.results[0][0].transcript : ``;
+          if (transcript) {
+            const box = document.getElementById(`idea-textarea`);
+            appState.ideaText = (appState.ideaText ? appState.ideaText + ` ` : ``) + transcript;
+            if (box) box.value = appState.ideaText;
+            updatePromptsAndView();
+            persistState();
+          }
+        };
+        recognitionInstance.onerror = function () {
+          isRecording = false;
+          if (voiceBtn) voiceBtn.classList.remove(`is-recording`);
+          if (voiceLabel) voiceLabel.textContent = (I18N[appState.uiLang] || I18N.en).btn_voice;
+          if (voiceNotice && voiceNoticeTxt) {
+            voiceNotice.className = `inline-notice is-visible is-warn`;
+            voiceNoticeTxt.textContent = `Microphone access was blocked in this preview frame. You can type your idea or choose a sample chip.`;
+          }
+        };
+        recognitionInstance.onend = function () {
+          isRecording = false;
+          if (voiceBtn) voiceBtn.classList.remove(`is-recording`);
+          if (voiceLabel) voiceLabel.textContent = (I18N[appState.uiLang] || I18N.en).btn_voice;
+        };
+
+        recognitionInstance.start();
+        isRecording = true;
+        if (voiceBtn) voiceBtn.classList.add(`is-recording`);
+        if (voiceLabel) voiceLabel.textContent = `Listening… (Stop)`;
+        if (voiceNotice) voiceNotice.classList.remove(`is-visible`);
+      } catch (err) {
+        if (voiceNotice && voiceNoticeTxt) {
+          voiceNotice.className = `inline-notice is-visible is-warn`;
+          voiceNoticeTxt.textContent = `Voice input could not start here. Please type your idea directly.`;
+        }
+      }
+    }
+
+    function saveDraft() {
+      const txt = (appState.ideaText || ``).trim();
+      if (!txt) {
+        showNotice(`Write an idea first before saving an offline draft.`, `warn`);
+        return;
+      }
+      appState.drafts.unshift({
+        id: `draft-${Date.now()}`,
+        ideaText: txt,
+        platform: appState.platform,
+        category: appState.category,
+        answers: Object.assign({}, appState.answers),
+        savedAt: new Date().toLocaleTimeString(`en-GB`, { hour: `2-digit`, minute: `2-digit` })
+      });
+      if (appState.drafts.length > 20) appState.drafts = appState.drafts.slice(0, 20);
+      renderDrafts();
+      updateBadges();
+      showNotice(`Offline draft saved to workspace.`, `positive`);
+      persistState();
+    }
+
+    function toggleDraftsDrawer() {
+      const drawer = document.getElementById(`drafts-drawer`);
+      if (drawer) drawer.classList.toggle(`is-open`);
+    }
+
+    function loadDraft(id) {
+      const d = appState.drafts.find(x => x.id === id);
+      if (!d) return;
+      appState.ideaText = d.ideaText;
+      appState.platform = d.platform;
+      appState.category = d.category;
+      appState.answers = Object.assign({}, d.answers);
+      markLoadedContext();
+      const box = document.getElementById(`idea-textarea`);
+      const catSel = document.getElementById(`category-select`);
+      if (box) box.value = d.ideaText;
+      if (catSel) catSel.value = d.category;
+      selectPlatform(d.platform);
+      renderSmartQuestions();
+      updatePromptsAndView();
+      toggleDraftsDrawer();
+      showNotice(`Draft loaded into Prompt Builder.`, `positive`);
+      persistState();
+    }
+
+    function deleteDraft(id) {
+      appState.drafts = appState.drafts.filter(x => x.id !== id);
+      renderDrafts();
+      updateBadges();
+      persistState();
+    }
+
+    function copyTextToClipboard(text, btnEl, defaultText) {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).catch(function () {});
+      }
+      if (btnEl) {
+        const span = btnEl.querySelector(`span`);
+        btnEl.classList.add(`is-copied`);
+        if (span) span.textContent = `Copied!`;
+        else btnEl.textContent = `Copied!`;
+        setTimeout(function () {
+          btnEl.classList.remove(`is-copied`);
+          if (span) span.textContent = defaultText;
+          else btnEl.textContent = defaultText;
+        }, 1600);
+      }
+    }
+
+    function copyVariation(varKey, btnEl) {
+      const txt = currentGenerated[varKey] || ``;
+      copyTextToClipboard(txt, btnEl, `Copy prompt`);
+    }
+
+    function copyShareSummary(varKey, btnEl) {
+      const txt = currentGenerated[varKey] || ``;
+      const shareBundle = `PromptWay (${appState.platform} · ${varKey.toUpperCase()})\n\n${txt}\n\nසිංහල: ${currentGenerated.sinhalaSummary}\nதமிழ்: ${currentGenerated.tamilSummary}`;
+      copyTextToClipboard(shareBundle, btnEl, `Share text`);
+    }
+
+    function toggleBookmark(varKey) {
+      const txt = currentGenerated[varKey] || ``;
+      const existingIdx = appState.savedPrompts.findIndex(s => s.promptText === txt);
+      if (existingIdx >= 0) {
+        appState.savedPrompts.splice(existingIdx, 1);
+        showNotice(`Removed prompt from Saved Favourites.`, `positive`);
+      } else {
+        const folderMap = {
+          social: `Social Media`,
+          academic: `Academic`,
+          research: `Academic`,
+          video: `Video & Image`,
+          daily: `Daily Life`,
+          general: appState.platform === `Coding AI` ? `Coding` : appState.platform === `Midjourney` ? `Video & Image` : `General`
+        };
+        appState.savedPrompts.unshift({
+          id: `sav-${Date.now()}`,
+          variation: varKey.charAt(0).toUpperCase() + varKey.slice(1),
+          platform: appState.platform,
+          category: appState.category,
+          folder: folderMap[appState.category] || `General`,
+          ideaText: (appState.ideaText || ``).trim(),
+          answers: Object.assign({}, appState.answers),
+          promptText: txt,
+          createdAt: new Date().toLocaleDateString(`en-GB`)
+        });
+        showNotice(`Saved ${varKey} prompt to Favourites!`, `positive`);
+      }
+      updateBadges();
+      renderVariationCards(currentGenerated);
+      renderSaved();
+      if (window.lucide && typeof window.lucide.createIcons === `function`) window.lucide.createIcons();
+      persistState();
+    }
+
+    function exportSinglePrompt(varKey, ext) {
+      const txt = currentGenerated[varKey] || ``;
+      const content = ext === `md`
+        ? `# PromptWay Export (${appState.platform} · ${varKey})\n\n**Original Idea:** ${appState.ideaText}\n\n## Optimised Prompt\n\n\`\`\`text\n${txt}\n\`\`\`\n\n## Bilingual Verification\n- **සිංහල:** ${currentGenerated.sinhalaSummary}\n- **தமிழ்:** ${currentGenerated.tamilSummary}\n`
+        : `PromptWay (${appState.platform} - ${varKey})\nOriginal Idea: ${appState.ideaText}\n\n${txt}\n`;
+      triggerDownload(content, `promptway-${appState.platform.toLowerCase().replace(/\s+/g, `-`)}-${varKey}.${ext}`);
+    }
+
+    function toggleNegativeTag(id) {
+      const idx = appState.negativeEnabled.indexOf(id);
+      if (idx >= 0) appState.negativeEnabled.splice(idx, 1);
+      else appState.negativeEnabled.push(id);
+      renderNegativePromptTile();
+      updatePromptsAndView();
+      persistState();
+    }
+
+    function addCustomNegative() {
+      const inp = document.getElementById(`custom-negative-input`);
+      if (!inp) return;
+      const val = inp.value.trim();
+      if (!val) return;
+      appState.customNegatives.push(val);
+      inp.value = ``;
+      renderNegativePromptTile();
+      updatePromptsAndView();
+      persistState();
+    }
+
+    function removeCustomNegative(idx) {
+      appState.customNegatives.splice(idx, 1);
+      renderNegativePromptTile();
+      updatePromptsAndView();
+      persistState();
+    }
+
+    function copyNegativePrompt() {
+      const btn = document.getElementById(`copy-neg-btn`);
+      copyTextToClipboard(buildNegativeString(), btn, `Copy avoid list`);
+    }
+
+    function setTemplateFilter(catKey) {
+      appState.templateFilter = catKey;
+      const btns = document.querySelectorAll(`#template-cat-filters .choice-chip`);
+      const map = [`all`, `social`, `academic`, `video`, `daily`, `research`, `coding`];
+      for (let i = 0; i < btns.length; i++) {
+        btns[i].classList.toggle(`is-active`, map[i] === catKey);
+      }
+      renderTemplates();
+    }
+
+    function useTemplate(id) {
+      const t = TEMPLATES.find(x => x.id === id);
+      if (!t) return;
+      appState.inputLang = t.lang;
+      appState.category = t.category;
+      appState.platform = t.platform;
+      appState.ideaText = t.idea;
+      appState.answers = Object.assign({}, t.answers);
+      markLoadedContext();
+
+      const langSel = document.getElementById(`input-lang-select`);
+      const catSel = document.getElementById(`category-select`);
+      const box = document.getElementById(`idea-textarea`);
+      if (langSel) langSel.value = t.lang;
+      if (catSel) catSel.value = t.category;
+      if (box) box.value = t.idea;
+
+      selectPlatform(t.platform);
+      renderSmartQuestions();
+      updatePromptsAndView();
+      switchView(`builder`);
+      showNotice(`Loaded template "${t.title}" into Prompt Builder.`, `positive`);
+      persistState();
+    }
+
+    function copySavedPrompt(id, btnEl) {
+      const item = appState.savedPrompts.find(x => x.id === id);
+      if (item) copyTextToClipboard(item.promptText, btnEl, `Copy`);
+    }
+
+    function reuseSavedPrompt(id) {
+      const item = appState.savedPrompts.find(x => x.id === id);
+      if (!item) return;
+      appState.category = item.category;
+      appState.platform = item.platform;
+      appState.ideaText = item.ideaText;
+      appState.answers = Object.assign({}, item.answers || {});
+      markLoadedContext();
+      const catSel = document.getElementById(`category-select`);
+      const box = document.getElementById(`idea-textarea`);
+      if (catSel) catSel.value = item.category;
+      if (box) box.value = item.ideaText;
+      selectPlatform(item.platform);
+      renderSmartQuestions();
+      updatePromptsAndView();
+      switchView(`builder`);
+      showNotice(`Loaded saved prompt back into Builder.`, `positive`);
+    }
+
+    function changeSavedFolder(id, newFolder) {
+      const item = appState.savedPrompts.find(x => x.id === id);
+      if (item) {
+        item.folder = newFolder;
+        persistState();
+      }
+    }
+
+    function deleteSavedPrompt(id) {
+      appState.savedPrompts = appState.savedPrompts.filter(x => x.id !== id);
+      updateBadges();
+      renderSaved();
+      renderVariationCards(currentGenerated);
+      if (window.lucide && typeof window.lucide.createIcons === `function`) window.lucide.createIcons();
+      persistState();
+    }
+
+    function copyHistoryPrompt(id, btnEl) {
+      const h = appState.historyLog.find(x => x.id === id);
+      if (h) copyTextToClipboard(h.detailedPrompt, btnEl, `Copy Detailed`);
+    }
+
+    function reopenHistory(id) {
+      const h = appState.historyLog.find(x => x.id === id);
+      if (!h) return;
+      appState.category = h.category;
+      appState.platform = h.platform;
+      appState.ideaText = h.ideaText;
+      appState.answers = Object.assign({}, h.answers || {});
+      markLoadedContext();
+      const catSel = document.getElementById(`category-select`);
+      const box = document.getElementById(`idea-textarea`);
+      if (catSel) catSel.value = h.category;
+      if (box) box.value = h.ideaText;
+      selectPlatform(h.platform);
+      renderSmartQuestions();
+      updatePromptsAndView();
+      switchView(`builder`);
+      showNotice(`Reopened prompt from History.`, `positive`);
+    }
+
+    function deleteHistoryItem(id) {
+      appState.historyLog = appState.historyLog.filter(x => x.id !== id);
+      updateBadges();
+      renderHistory();
+      persistState();
+    }
+
+    function clearAllHistory(btn) {
+      if (!btn) return;
+      if (btn.dataset.armed !== `true`) {
+        btn.dataset.armed = `true`;
+        btn.textContent = `Click again to clear all`;
+        setTimeout(function () {
+          if (btn.dataset.armed === `true`) {
+            btn.dataset.armed = `false`;
+            btn.textContent = `Clear history`;
+          }
+        }, 3500);
+        return;
+      }
+      btn.dataset.armed = `false`;
+      btn.textContent = `Clear history`;
+      appState.historyLog = [];
+      updateBadges();
+      renderHistory();
+      showNotice(`Generation history cleared.`, `positive`);
+      persistState();
+    }
+
+    function syncSettingsControls() {
+      const setUi = document.getElementById(`set-ui-lang`);
+      const setIn = document.getElementById(`set-default-input`);
+      const setPl = document.getElementById(`set-default-platform`);
+      const setVar = document.getElementById(`set-default-var`);
+      const setTh = document.getElementById(`set-theme`);
+      const setFs = document.getElementById(`set-font-size`);
+      if (setUi) setUi.value = appState.uiLang;
+      if (setIn) setIn.value = appState.defaults.inputLang;
+      if (setPl) setPl.value = appState.defaults.platform;
+      if (setVar) setVar.value = appState.defaults.variation;
+      if (setTh) setTh.value = appState.theme;
+      if (setFs) setFs.value = appState.fontSize;
+    }
+
+    function updateSettingsFromControls() {
+      const setIn = document.getElementById(`set-default-input`);
+      const setPl = document.getElementById(`set-default-platform`);
+      const setVar = document.getElementById(`set-default-var`);
+      if (setIn) appState.defaults.inputLang = setIn.value;
+      if (setPl) appState.defaults.platform = setPl.value;
+      if (setVar) appState.defaults.variation = setVar.value;
+      persistState();
+      showNotice(`Default workspace preferences updated.`, `positive`);
+    }
+
+    function selectResearchCase(idx) {
+      appState.researchCaseIdx = idx;
+      renderResearchComparison();
+      persistState();
+    }
+
+    function toggleChecklistItem(id) {
+      const idx = appState.checklistDone.indexOf(id);
+      if (idx >= 0) appState.checklistDone.splice(idx, 1);
+      else appState.checklistDone.push(id);
+      renderRoadmapChecklist();
+      persistState();
+    }
+
+    function exportAllSavedMarkdown() {
+      if (appState.savedPrompts.length === 0) {
+        showNotice(`No saved prompts to export yet.`, `warn`);
+        return;
+      }
+      const md = appState.savedPrompts.map((s, i) =>
+        `## ${i + 1}. ${s.platform} (${s.variation}) — ${s.folder}\n**Idea:** ${s.ideaText}\n\n\`\`\`text\n${s.promptText}\n\`\`\`\n`
+      ).join(`\n---\n\n`);
+      triggerDownload(`# PromptWay Saved Prompts\n\n` + md, `promptway-saved-prompts.md`);
+    }
+
+    function exportHistoryTxt() {
+      if (appState.historyLog.length === 0) {
+        showNotice(`No generation history to export yet.`, `warn`);
+        return;
+      }
+      const txt = appState.historyLog.map((h, i) =>
+        `[${i + 1}] ${h.timestamp} | ${h.platform} | ${h.detectedLang}\nInput: ${h.ideaText}\n\n${h.detailedPrompt}\n========================================\n`
+      ).join(`\n`);
+      triggerDownload(txt, `promptway-history.txt`);
+    }
+
+    function exportWorkspaceJson() {
+      const backup = JSON.stringify({
+        savedPrompts: appState.savedPrompts,
+        historyLog: appState.historyLog,
+        drafts: appState.drafts,
+        checklistDone: appState.checklistDone,
+        defaults: appState.defaults
+      }, null, 2);
+      triggerDownload(backup, `promptway-workspace-backup.json`);
+    }
+
+    function resetAllWorkspace(btn) {
+      if (!btn) return;
+      if (btn.dataset.armed !== `true`) {
+        btn.dataset.armed = `true`;
+        btn.textContent = `Confirm reset all data`;
+        setTimeout(function () {
+          if (btn.dataset.armed === `true`) {
+            btn.dataset.armed = `false`;
+            btn.textContent = `Reset All Data`;
+          }
+        }, 3500);
+        return;
+      }
+      btn.dataset.armed = `false`;
+      btn.textContent = `Reset All Data`;
+      appState.savedPrompts = [];
+      appState.historyLog = [];
+      appState.drafts = [];
+      appState.checklistDone = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+      renderAll();
+      showNotice(`Saved prompts, history, and drafts have been reset.`, `positive`);
+      persistState();
+    }
+
+    function triggerDownload(content, filename) {
+      if (window.notebookAppApi && typeof window.notebookAppApi.triggerFileDownload === `function`) {
+        window.notebookAppApi.triggerFileDownload({
+          content: content,
+          contentType: `text/plain`,
+          encoding: `UTF-8`,
+          filename: filename
+        });
+        showNotice(`Exported ${filename}.`, `positive`);
+      } else {
+        const blob = new Blob([content], { type: `text/plain;charset=utf-8` });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement(`a`);
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      }
+    }
+
+    function showNotice(message, tone) {
+      const el = document.getElementById(`global-notice`);
+      const txt = document.getElementById(`global-notice-text`);
+      if (!el || !txt) return;
+      txt.textContent = message;
+      el.className = `inline-notice is-visible ${tone === `warn` ? `is-warn` : tone === `positive` ? `is-positive` : ``}`;
+    }
+
+    function hideNotice() {
+      const el = document.getElementById(`global-notice`);
+      if (el) el.classList.remove(`is-visible`);
+    }
+
+    function escapeHtml(str) {
+      return String(str || ``)
+        .replace(/&/g, `&amp;`)
+        .replace(/</g, `&lt;`)
+        .replace(/>/g, `&gt;`)
+        .replace(/"/g, `&quot;`)
+        .replace(/'/g, `&#39;`);
+    }
+
+    // =========================================================================
+    // 7. PERSISTENCE & INITIALISATION (notebookAppApi)
+    // =========================================================================
+    async function persistState() {
+      if (window.notebookAppApi && typeof window.notebookAppApi.setAppState === `function`) {
+        try {
+          await window.notebookAppApi.setAppState(appState);
+        } catch (err) {
+          // Safe silent catch inside preview
+        }
+      }
+    }
+
+    async function initApp() {
+      if (window.notebookAppApi && typeof window.notebookAppApi.getAppState === `function`) {
+        try {
+          const saved = await window.notebookAppApi.getAppState();
+          if (saved && typeof saved === `object`) {
+            appState = Object.assign({}, appState, saved);
+            if (!saved.inputContext) {
+              const preset = SAMPLE_IDEAS.concat(TEMPLATES).find(p => Object.entries(p.answers || {}).filter(([id, value]) => saved.answers && saved.answers[id] === value).length >= 2);
+              if (preset) {
+                appState.inputContext = { text: preset.text || preset.idea, inherited: Object.keys(preset.answers).filter(id => appState.answers[id] === preset.answers[id]), categoryFromPreset: true };
+              } else appState.inputContext = { text: appState.ideaText, inherited: [], categoryFromPreset: false };
+            }
+            syncIdeaContext();
+          }
+        } catch (err) {
+          // Use default state
+        }
+      }
+
+      const langSel = document.getElementById(`input-lang-select`);
+      const catSel = document.getElementById(`category-select`);
+      const ideaEl = document.getElementById(`idea-textarea`);
+      if (langSel) langSel.value = appState.inputLang;
+      if (catSel) catSel.value = appState.category;
+      if (ideaEl) ideaEl.value = appState.ideaText;
+
+      const chips = document.querySelectorAll(`#platform-chips .choice-chip`);
+      for (let i = 0; i < chips.length; i++) {
+        chips[i].classList.toggle(`is-active`, chips[i].getAttribute(`data-platform`) === appState.platform);
+      }
+
+      const refBtns = document.querySelectorAll(`#refine-buttons .mini-btn`);
+      for (let i = 0; i < refBtns.length; i++) {
+        refBtns[i].classList.toggle(`is-active`, refBtns[i].getAttribute(`data-refine`) === appState.refinement);
+      }
+
+      setVariationFilter(appState.variationFilter || `all`);
+      switchView(appState.activeView || `builder`);
+      renderAll();
+
+      if (window.notebookAppApi && typeof window.notebookAppApi.notifyAppReady === `function`) {
+        window.notebookAppApi.notifyAppReady();
+      }
+    }
+
+    document.addEventListener(`DOMContentLoaded`, initApp);
+  </script>
+</body>
+</html>
